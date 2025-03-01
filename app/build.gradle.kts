@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.ksp)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -34,13 +35,6 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             project.extensions.extraProperties["android.enableAppCompileTimeRClass"] = true
         }
-
-        debug {
-            isMinifyEnabled = false
-
-            applicationIdSuffix = ".debug"
-        }
-
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -51,16 +45,21 @@ android {
         languageVersion = "2.1"
         apiVersion = "2.1"
     }
+
     buildFeatures {
         compose = true
     }
 }
 
 dependencies {
+    //fcm
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.messaging)
+
     //yandex oauth
     implementation(libs.authsdk)
 
-// Retrofit
+    // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 

@@ -1,6 +1,5 @@
 package com.prod.bookit.presentation.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prod.bookit.domain.model.CoworkingDetail

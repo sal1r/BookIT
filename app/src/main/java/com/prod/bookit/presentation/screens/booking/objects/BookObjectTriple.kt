@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
@@ -29,12 +32,14 @@ import androidx.compose.ui.zIndex
 import com.prod.bookit.presentation.models.BookObjectColors
 import com.prod.bookit.presentation.models.BookObjectDefaults
 import com.prod.bookit.presentation.models.BookObjectUIData
+import com.prod.bookit.presentation.models.CoworkingDefaults
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
 
 @Composable
 fun BookObjectTriple(
     bookObjectUIData: BookObjectUIData,
+    modifier: Modifier = Modifier,
     ltr: Boolean = true,
     bookObjectColors: BookObjectColors = BookObjectDefaults.bookObjectColors,
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
@@ -50,16 +55,16 @@ fun BookObjectTriple(
                 if (bookObjectUIData.avalibleToBook) bookObjectColors.avalibleContentColor
                 else bookObjectColors.unavalibleContentColor
     ) {
-        Box {
+        Box(modifier = modifier) {
             Box(
                 modifier = Modifier.clickable(onClick = onClick)
             ) {
                 Box(
                     modifier = Modifier
                         .align(if (ltr) Alignment.BottomStart else Alignment.BottomEnd)
-                        .padding(bottom = BookObjectDefaults.cellSize)
-                        .width(BookObjectDefaults.cellSize)
-                        .height(BookObjectDefaults.cellSize + BookObjectDefaults.spaceSize)
+                        .padding(bottom = CoworkingDefaults.cellSize)
+                        .requiredWidth(CoworkingDefaults.cellSize)
+                        .requiredHeight(CoworkingDefaults.cellSize + CoworkingDefaults.spaceSize)
                         .clip(MaterialTheme.shapes.medium.copy(
                             bottomEnd = CornerSize(0.dp),
                             bottomStart = CornerSize(0.dp)
@@ -67,7 +72,7 @@ fun BookObjectTriple(
                         .background(containerColor)
                 ) {
                     Box(
-                        modifier = Modifier.size(BookObjectDefaults.cellSize)
+                        modifier = Modifier.requiredSize(CoworkingDefaults.cellSize)
                     ) {
                         Text(
                             text = bookObjectUIData.index.toString(),
@@ -84,8 +89,7 @@ fun BookObjectTriple(
                 ) {
                     Box(
                         modifier = Modifier
-                            .height(BookObjectDefaults.cellSize)
-                            .width(BookObjectDefaults.cellSize)
+                            .requiredSize(CoworkingDefaults.cellSize)
                             .clip(MaterialTheme.shapes.medium.copy(
                                 topStart = if (ltr) CornerSize(0.dp) else MaterialTheme.shapes.medium.topStart,
                                 topEnd = CornerSize(0.dp),
@@ -95,8 +99,8 @@ fun BookObjectTriple(
                     )
                     Box(
                         modifier = Modifier
-                            .height(BookObjectDefaults.cellSize)
-                            .width(BookObjectDefaults.cellSize + BookObjectDefaults.spaceSize)
+                            .requiredHeight(CoworkingDefaults.cellSize)
+                            .requiredWidth(CoworkingDefaults.cellSize + CoworkingDefaults.spaceSize)
                             .clip(MaterialTheme.shapes.medium.copy(
                                 topStart = CornerSize(0.dp),
                                 bottomStart = CornerSize(0.dp),
@@ -109,12 +113,12 @@ fun BookObjectTriple(
                 Box(
                     modifier = Modifier
                         .align(if (ltr) Alignment.TopEnd else Alignment.TopStart)
-                        .size(BookObjectDefaults.cellSize + BookObjectDefaults.spaceSize)
+                        .requiredSize(CoworkingDefaults.cellSize + CoworkingDefaults.spaceSize)
                 ) {
                     Box(
                         modifier = Modifier
                             .align(if (ltr) Alignment.BottomStart else Alignment.BottomEnd)
-                            .size(BookObjectDefaults.cellSize / 2)
+                            .requiredSize(CoworkingDefaults.cellSize / 2)
                             .background(containerColor)
                     )
                 }
@@ -123,7 +127,7 @@ fun BookObjectTriple(
             Box(
                 modifier = Modifier
                     .zIndex(1f)
-                    .size(BookObjectDefaults.cellSize + BookObjectDefaults.spaceSize)
+                    .requiredSize(CoworkingDefaults.cellSize + CoworkingDefaults.spaceSize)
                     .align(if (ltr) Alignment.TopEnd else Alignment.TopStart)
                     .clip(MaterialTheme.shapes.medium)
                     .background(backgroundColor)

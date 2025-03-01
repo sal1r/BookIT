@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -22,12 +24,14 @@ import androidx.compose.ui.unit.dp
 import com.prod.bookit.presentation.models.BookObjectColors
 import com.prod.bookit.presentation.models.BookObjectDefaults
 import com.prod.bookit.presentation.models.BookObjectUIData
+import com.prod.bookit.presentation.models.CoworkingDefaults
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
 
 @Composable
 fun BookObjectDouble(
     bookObjectUIData: BookObjectUIData,
+    modifier: Modifier = Modifier,
     bookObjectColors: BookObjectColors = BookObjectDefaults.bookObjectColors,
     onClick: () -> Unit = {}
 ) {
@@ -37,9 +41,9 @@ fun BookObjectDouble(
                 else bookObjectColors.unavalibleContentColor
     ) {
         Box(
-            modifier = Modifier
-                .height(BookObjectDefaults.cellSize)
-                .width(BookObjectDefaults.cellSize * 2 + BookObjectDefaults.spaceSize)
+            modifier = modifier
+                .requiredHeight(CoworkingDefaults.cellSize)
+                .requiredWidth(CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize)
                 .clip(MaterialTheme.shapes.medium)
                 .background(
                     if (bookObjectUIData.avalibleToBook) bookObjectColors.avalibleContainerColor
@@ -51,7 +55,7 @@ fun BookObjectDouble(
             Text(
                 text = bookObjectUIData.index.toString(),
                 textAlign = TextAlign.Center,
-                modifier = Modifier.width(BookObjectDefaults.cellSize),
+                modifier = Modifier.width(CoworkingDefaults.cellSize),
                 style = MaterialTheme.typography.titleLarge
             )
         }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -22,12 +23,14 @@ import androidx.compose.ui.unit.dp
 import com.prod.bookit.presentation.models.BookObjectColors
 import com.prod.bookit.presentation.models.BookObjectDefaults
 import com.prod.bookit.presentation.models.BookObjectUIData
+import com.prod.bookit.presentation.models.CoworkingDefaults
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
 
 @Composable
 fun BookObjectSingle(
     bookObjectUIData: BookObjectUIData,
+    modifier: Modifier = Modifier,
     bookObjectColors: BookObjectColors = BookObjectDefaults.bookObjectColors,
     onClick: () -> Unit = {}
 ) {
@@ -37,8 +40,8 @@ fun BookObjectSingle(
                 else bookObjectColors.unavalibleContentColor
     ) {
         Box(
-            modifier = Modifier
-                .size(BookObjectDefaults.cellSize)
+            modifier = modifier
+                .requiredSize(CoworkingDefaults.cellSize)
                 .clip(MaterialTheme.shapes.medium)
                 .background(
                     if (bookObjectUIData.avalibleToBook) bookObjectColors.avalibleContainerColor

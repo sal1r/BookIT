@@ -14,8 +14,4 @@ object BookObjectDefaults {
             unavalibleContainerColor = MaterialTheme.colorScheme.onSurface.secondary,
             unavalibleContentColor = MaterialTheme.colorScheme.surface.secondary
         )
-
-    val cellSize: Dp = 48.dp
-
-    val spaceSize: Dp = 8.dp
 }

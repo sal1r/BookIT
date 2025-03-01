@@ -1,5 +1,6 @@
 package com.prod.bookit.common.di
 
+import com.prod.bookit.data.remote.api.CoworkingsApi
 import com.prod.bookit.data.remote.api.AuthApi
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -15,4 +16,5 @@ val networkModule = module {
     }
 
     single { get<Retrofit>().create(AuthApi::class.java) }
+    single { get<Retrofit>().create(CoworkingsApi::class.java) }
 }

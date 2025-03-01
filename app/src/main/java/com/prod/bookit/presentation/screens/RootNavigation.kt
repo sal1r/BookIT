@@ -10,6 +10,7 @@ import com.prod.bookit.presentation.screens.home.HomeNavigation
 import com.prod.bookit.presentation.screens.settings.SettingsScreen
 import com.prod.bookit.presentation.screens.welcome.welcome.WelcomeScreen
 import com.prod.bookit.presentation.screens.booking.BookingScreen
+import com.prod.bookit.presentation.screens.coworkings.CoworkingsScreen
 
 @Composable
 fun RootNavigation() {
@@ -45,6 +46,12 @@ fun RootNavigation() {
 
         composable<RootNavDestinations.Booking> {
             BookingScreen()
+        }
+
+        composable<RootNavDestinations.Coworkings> {
+            CoworkingsScreen(
+                rootNavController = rootNavController
+            )
         }
     }
 }

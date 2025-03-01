@@ -1,0 +1,50 @@
+package com.prod.bookit.presentation.screens.home.main
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+@Composable
+fun MainScreen() {
+    MainScreenContent()
+}
+
+@Composable
+private fun MainScreenContent() {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(16.dp)
+    ) {
+
+    }
+}
+
+@Preview
+@Composable
+private fun MainScreenDarkPreview() {
+    MaterialTheme(
+        colorScheme = darkColorScheme()
+    ) {
+        MainScreenContent()
+    }
+}
+
+@Preview
+@Composable
+private fun MainScreenLightPreview() {
+    MaterialTheme(
+        colorScheme = lightColorScheme()
+    ) {
+        MainScreenContent()
+    }
+}

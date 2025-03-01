@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FinalDraftForProd"
+rootProject.name = "BookIT"
 include(":app")
  

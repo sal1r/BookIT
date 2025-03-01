@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name" translatable="false">FinalDraftForProd</string>
+    <string name="main">Главная</string>
+    <string name="sign_in">Войти</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="email">Электронная почта</string>
+    <string name="password">Пароль</string>
+    <string name="password_must_be_at_least_4_characters">Пароль должен содержать минимум 4 символа</string>
+    <string name="password_cannot_be_empty">Пароль не может быть пустым</string>
+    <string name="invalid_data">Данные не верны</string>
+    <string name="smth_went_wrong">Что-то пошло не так. Попробуйте позже</string>
+    <string name="settings__lang_ru">Russian</string>
+    <string name="settings__lang_en">English</string>
+    <string name="settings__lang_system">System</string>
+    <string name="settings__theme_dark">Dark</string>
+    <string name="settings__theme_light">Светлая</string>
+    <string name="settings__theme_system">Системная</string>
+    <string name="loading">Загрузка</string>
+    <string name="setting_theme" translatable="false">theme</string>
+    <string name="setting_lang" translatable="false">lang</string>
+    <string name="setting_dc" translatable="false">dc</string>
+    <string name="settings__title_theme">Тема</string>
+    <string name="settings__title_lang">Язык</string>
+    <string name="settings__tilte_dc">Динамические цвета</string>
+    <string name="settings__block_general">Основные</string>
+    <string name="settings__block_appearance">Оформление</string>
+    <string name="settings__title">Настройки</string>
+    <string name="fill_in_application">Заполните анкету!</string>
+    <string name="or">или</string>
+    <string name="sign_in_with_yandex">Войти с Яндекс ID</string>
+    <string name="name">Имя</string>
+    <string name="wrong_email_format">Неверный формат почты</string>
+    <string name="field_cannot_be_empty">Поле не может быть пустым</string>
+    <string name="booking__coworking_title">Коворкинг %s</string>
+</resources>

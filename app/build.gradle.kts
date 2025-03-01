@@ -24,12 +24,23 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
+
             )
+            signingConfig = signingConfigs.getByName("debug")
+            project.extensions.extraProperties["android.enableAppCompileTimeRClass"] = true
         }
+
+        debug {
+            isMinifyEnabled = false
+
+            applicationIdSuffix = ".debug"
+        }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -37,6 +48,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+        languageVersion = "2.1"
+        apiVersion = "2.1"
     }
     buildFeatures {
         compose = true

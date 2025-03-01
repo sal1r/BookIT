@@ -2,6 +2,7 @@ package com.prod.bookit.presentation.screens.booking
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -80,18 +81,11 @@ private fun BookingScreenContent(
                 .padding(horizontal = 16.dp)
         ) {
             Column {
-                BookingCanvas(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f),
-                    coworking = Coworking(
-                        id = 0,
-                        name = "т-ворк",
-                        width = 128,
-                        height = 256,
-                    ),
-                    bookObjects = emptyList()
-                )
+                Box(
+
+                ) {
+
+                }
 
                 Row(
                     modifier = Modifier

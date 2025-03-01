@@ -1,4 +1,4 @@
-package com.prod.bookit.presentation.screens.booking
+package com.prod.bookit.presentation.screens.booking.test
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize

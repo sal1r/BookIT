@@ -10,6 +10,7 @@ import com.prod.bookit.data.remote.dto.auth.AuthResponse
 import com.prod.bookit.data.remote.dto.auth.LoginRequestDto
 import com.prod.bookit.data.remote.dto.auth.NotificationsRequestDto
 import com.prod.bookit.data.remote.dto.auth.RegisterRequestDto
+import com.prod.bookit.data.remote.dto.auth.YandexToken
 import com.prod.bookit.domain.repository.AuthRepository
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType
@@ -49,7 +50,7 @@ class AuthRepositoryImpl(
     }
 
     override suspend fun signInWithYandex(token: String): Boolean {
-        val response = api.signInWithYandex(token)
+        val response = api.signInWithYandex(YandexToken(token))
 
         val result = handleAuthResponse(response)
         sendDeviceToken()

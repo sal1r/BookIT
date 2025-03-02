@@ -8,18 +8,15 @@ class AuthInterceptor(
     private val prefs: SharedPreferences
 ): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val originalRequest = chain.request()
+        val originalRequest = chain.request().newBuilder().apply {
+            header("accept", "application/json")
+            header("Content-Type", "application/json")
+        }.build()
 
         if (originalRequest.url.encodedPath.startsWith("/users") ||
-            originalRequest.url.encodedPath.startsWith("/storage") ||
             originalRequest.url.encodedPath.startsWith("/auth")) {
 
-            val newRequest = originalRequest.newBuilder().apply {
-                header("accept", "application/json")
-                header("Content-Type", "application/json")
-            }.build()
-
-            return chain.proceed(newRequest)
+            return chain.proceed(originalRequest)
         }
 
         val token = prefs.getString("jwt_token", null)

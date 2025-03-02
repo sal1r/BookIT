@@ -6,6 +6,7 @@ import com.prod.bookit.data.remote.dto.auth.LoginRequestDto
 import com.prod.bookit.data.remote.dto.auth.NotificationsRequestDto
 import com.prod.bookit.data.remote.dto.auth.RegisterRequestDto
 import okhttp3.MultipartBody
+import com.prod.bookit.data.remote.dto.auth.YandexToken
 import retrofit2.http.Body
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -24,8 +25,8 @@ interface AuthApi {
     @POST("auth/login")
     suspend fun login(@Body request: LoginRequestDto): AuthResponse
 
-    @POST("auth/yandex")
-    suspend fun signInWithYandex(@Body token: String): AuthResponse
+    @POST("auth/login/yandex")
+    suspend fun signInWithYandex(@Body token: YandexToken): AuthResponse
 
     @POST("notifications/device-tokens")
     suspend fun sendDeviceToken(@Body info: NotificationsRequestDto)

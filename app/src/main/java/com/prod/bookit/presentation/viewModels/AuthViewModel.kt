@@ -46,6 +46,7 @@ class AuthViewModel(
 
     fun signInWithYandex(token: String) {
         viewModelScope.launch {
+            Log.i("INFOG", token)
             _authState.value = AuthState.Loading
 
             try {

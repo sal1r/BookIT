@@ -38,6 +38,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.prod.bookit.R
 import com.prod.bookit.presentation.components.BigButton
 import com.prod.bookit.presentation.components.MyDatePicker
@@ -47,6 +48,7 @@ import com.prod.bookit.presentation.components.ScalableBox
 import com.prod.bookit.presentation.models.BookingData
 import com.prod.bookit.presentation.models.Coworking
 import com.prod.bookit.presentation.models.CoworkingDefaults
+import com.prod.bookit.presentation.screens.RootNavDestinations
 import com.prod.bookit.presentation.screens.booking.shemes.ShemeType1
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
@@ -55,12 +57,19 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun BookingScreen() {
+fun BookingScreen(
+    rootNavController: NavController
+) {
     BookingScreenContent(
         coworking = Coworking(
             id = 0,
             name = "т-ворк"
-        )
+        ),
+        onBackClick = {
+            rootNavController.navigate(RootNavDestinations.Coworkings) {
+
+            }
+        }
     )
 }
 

@@ -4,10 +4,7 @@ import com.prod.bookit.data.remote.dto.auth.AuthResponse
 import com.prod.bookit.data.remote.dto.auth.LoginRequestDto
 import com.prod.bookit.data.remote.dto.auth.NotificationsRequestDto
 import com.prod.bookit.data.remote.dto.auth.RegisterRequestDto
-import okhttp3.Response
 import retrofit2.http.Body
-import retrofit2.http.HEAD
-import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthApi {

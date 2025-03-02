@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 import com.prod.bookit.domain.model.CoworkingDetail
 import com.prod.bookit.domain.model.CoworkingSummary
 import com.prod.bookit.presentation.components.FullScreenImageDialog
+import com.prod.bookit.presentation.screens.RootNavDestinations
 import com.prod.bookit.presentation.viewModels.CoworkingsViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -110,7 +111,9 @@ fun CoworkingsScreen(
             viewModel.loadCoworkingDetail(summary.id)
         },
         onBackClicked = {
-            rootNavController.popBackStack()
+            rootNavController.navigate(RootNavDestinations.Booking) {
+
+            }
         }
     )
 }

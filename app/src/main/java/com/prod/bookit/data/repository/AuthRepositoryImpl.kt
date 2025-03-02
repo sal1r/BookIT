@@ -1,17 +1,27 @@
 package com.prod.bookit.data.repository
 
 import android.content.SharedPreferences
+import android.net.Uri
 import android.util.Log
+import androidx.core.net.toFile
+import com.prod.bookit.common.AppDispatchers
 import com.prod.bookit.data.remote.api.AuthApi
 import com.prod.bookit.data.remote.dto.auth.AuthResponse
 import com.prod.bookit.data.remote.dto.auth.LoginRequestDto
 import com.prod.bookit.data.remote.dto.auth.NotificationsRequestDto
 import com.prod.bookit.data.remote.dto.auth.RegisterRequestDto
 import com.prod.bookit.domain.repository.AuthRepository
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 
 class AuthRepositoryImpl(
     private val api: AuthApi,
-    private val prefs: SharedPreferences
+    private val prefs: SharedPreferences,
+    private val dispatchers: AppDispatchers
 ) : AuthRepository {
     override suspend fun register(email: String, password: String, fullName: String): Boolean {
         val response = api.register(
@@ -88,5 +98,18 @@ class AuthRepositoryImpl(
 
     override fun clearToken() {
         prefs.edit().remove("jwt_token").apply()
+    }
+
+    override suspend fun loadImage(uri: Uri): String = withContext(dispatchers.io) {
+        val file = uri.toFile()
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+
+        api.uploadFile(
+            file = MultipartBody.Part.createFormData(
+                "file",
+                file.name,
+                requestFile
+            )
+        ).url
     }
 }

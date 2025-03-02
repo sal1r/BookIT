@@ -18,7 +18,7 @@ val commonModule = module {
         )
     }
 
-    single { MyFirebaseMessagingService(get()) }
+    single { MyFirebaseMessagingService() }
 
     single {
         androidContext().getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)

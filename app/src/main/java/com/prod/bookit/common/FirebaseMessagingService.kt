@@ -2,6 +2,7 @@ package com.prod.bookit.common
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.util.Log
@@ -11,9 +12,14 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.prod.bookit.R
 
-class MyFirebaseMessagingService(
-    private val prefs: SharedPreferences
-) : FirebaseMessagingService() {
+class MyFirebaseMessagingService: FirebaseMessagingService() {
+
+    private lateinit var prefs: SharedPreferences
+
+    override fun onCreate() {
+        super.onCreate()
+        prefs = getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+    }
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)

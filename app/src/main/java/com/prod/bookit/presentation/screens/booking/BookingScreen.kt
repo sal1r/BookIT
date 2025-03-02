@@ -59,24 +59,24 @@ import com.prod.bookit.presentation.viewModels.BookingViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.getKoin
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookingScreen(
-    coworking: Coworking = Coworking(
-        id = "",
-        name = "т-ворк"
-    ),
     rootNavController: NavController,
-    vm: BookingViewModel = koinViewModel()
+    vm: BookingViewModel = getKoin().get()
 ) {
     val coroutineScope = rememberCoroutineScope()
     var bookingStatus by remember { mutableStateOf(BookingStatus.EMPTY) }
 
     BookingScreenContent(
-        coworking = coworking,
+        coworking = Coworking(
+            id = "",
+            name = "т-ворк"
+        ),
         onBackClick = {},
         onBookClick = {
             coroutineScope.launch {
@@ -85,7 +85,8 @@ fun BookingScreen(
                 }
             }
         },
-        bookingStatus = bookingStatus
+        bookingStatus = bookingStatus,
+        refreshBookingStatus = { bookingStatus = BookingStatus.EMPTY }
     )
 }
 
@@ -94,14 +95,14 @@ fun BookingScreen(
 private fun BookingScreenContent(
     coworking: Coworking,
     bookingStatus: BookingStatus,
-    isBookingNow: Boolean = false,
     onBackClick: () -> Unit = {},
     onInfoClick: () -> Unit = {},
     bookObjects: List<BookObject> = List(28) { BookObject(
         id = it.toString(),
         index = it + 1
     ) },
-    onBookClick: (BookingData) -> Unit = {}
+    onBookClick: (BookingData) -> Unit = {},
+    refreshBookingStatus: () -> Unit = {}
 ) {
     var startTime by remember { mutableStateOf<LocalTime>(LocalTime.of(16, 0)) }
     var endTime by remember { mutableStateOf<LocalTime>(LocalTime.of(18, 0)) }
@@ -311,8 +312,8 @@ private fun BookingScreenContent(
         BookObjectDetailScreen(
             onDismiss = { bookingData = null },
             bookingData = it,
-            isLoading = isBookingNow,
-            onBookClick = onBookClick
+            onBookClick = onBookClick,
+            bookingStatus = bookingStatus
         )
     }
 

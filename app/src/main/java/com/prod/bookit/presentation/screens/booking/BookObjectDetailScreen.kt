@@ -23,12 +23,14 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prod.bookit.R
 import com.prod.bookit.presentation.components.BigButton
 import com.prod.bookit.presentation.components.OutlinedBigButton
 import com.prod.bookit.presentation.models.BookingData
+import com.prod.bookit.presentation.models.BookingStatus
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -36,9 +38,9 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookObjectDetailScreen(
+    bookingStatus: BookingStatus,
     onDismiss: () -> Unit,
     bookingData: BookingData,
-    isLoading: Boolean = false,
     onBookClick: (BookingData) -> Unit = {}
 ) {
     ModalBottomSheet(
@@ -49,18 +51,18 @@ fun BookObjectDetailScreen(
             .windowInsetsPadding(WindowInsets.systemBars)
     ) {
         BookObjectDetailScreenContent(
-            isLoading = isLoading,
             bookingData = bookingData,
             onBookClick = { onBookClick(bookingData) },
-            onChangeClick = onDismiss
+            onChangeClick = onDismiss,
+            bookingStatus = bookingStatus
         )
     }
 }
 
 @Composable
 private fun BookObjectDetailScreenContent(
+    bookingStatus: BookingStatus,
     bookingData: BookingData,
-    isLoading: Boolean = false,
     onChangeClick: () -> Unit = {},
     onBookClick: () -> Unit = {}
 ) {
@@ -99,6 +101,23 @@ private fun BookObjectDetailScreenContent(
 
         Spacer(modifier = Modifier.weight(1f))
 
+        when (bookingStatus) {
+            BookingStatus.ERROR -> Text(
+                text = "Ошибка! Кто-то уже забронировал это место на ваше время :(",
+                color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center
+            )
+
+            BookingStatus.SUCCESS -> Text(
+                text = "Вы успешно забронировали место! Забронированные места можно посмотреть во вкладке профиля",
+                textAlign = TextAlign.Center
+            )
+
+            else -> {}
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Row {
             OutlinedBigButton(
                 modifier = Modifier.weight(1f),
@@ -113,13 +132,13 @@ private fun BookObjectDetailScreenContent(
 
             BigButton(
                 modifier = Modifier.weight(1f),
-                enabled = !isLoading,
+                enabled = bookingStatus == BookingStatus.EMPTY,
                 onClick = onBookClick
             ) {
-                if (isLoading) {
-                    CircularProgressIndicator()
-                } else {
-                    Text(
+                when (bookingStatus) {
+                    BookingStatus.LOADING -> CircularProgressIndicator()
+
+                    else -> Text(
                         text = stringResource(R.string.booking__book)
                     )
                 }
@@ -137,6 +156,7 @@ private fun BookObjectDetailScreenPreview() {
             .background(MaterialTheme.colorScheme.surface)
     ) {
         BookObjectDetailScreenContent(
+            bookingStatus = BookingStatus.ERROR,
             BookingData(
                 spotId = "",
                 coworkingName = "т-ворк",

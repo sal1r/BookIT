@@ -52,6 +52,8 @@ android {
 }
 
 dependencies {
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
     //fcm
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)

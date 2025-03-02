@@ -11,7 +11,9 @@ import org.koin.androidx.compose.KoinAndroidContext
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
+
         setContent {
             FinalDraftForProdTheme {
                 KoinAndroidContext {

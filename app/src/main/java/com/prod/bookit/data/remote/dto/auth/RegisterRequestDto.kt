@@ -1,9 +1,9 @@
 package com.prod.bookit.data.remote.dto.auth
 
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class RegisterRequestDto(
     val email: String,
+    @SerializedName("full_name") val fullName: String,
     val password: String
 )

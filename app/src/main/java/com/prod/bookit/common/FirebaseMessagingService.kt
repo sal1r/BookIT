@@ -2,6 +2,7 @@ package com.prod.bookit.common
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.SharedPreferences
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -10,11 +11,13 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.prod.bookit.R
 
-class MyFirebaseMessagingService : FirebaseMessagingService() {
+class MyFirebaseMessagingService(
+    private val prefs: SharedPreferences
+) : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d("INFOG", "New token: $token")
+        prefs.edit().putString("fcm_token", token).apply()
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

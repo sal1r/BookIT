@@ -75,8 +75,12 @@ fun RegisterScreen(
         imagePickerLauncher.launch("image/*")
     }
 
-    val onRegisterClick: (String, String) -> Unit = { email, password ->
-        authViewModel.register(email = email, password = password)
+    val onRegisterClick: (String, String, String) -> Unit = { email, password, fullName ->
+        authViewModel.register(
+            email = email,
+            password = password,
+            fullName = fullName
+        )
     }
 
     val yandexSdk = YandexAuthSdk.create(YandexAuthOptions(context))
@@ -119,7 +123,7 @@ fun RegisterScreenContent(
     avatarUri: Uri?,
     onImageClick: () -> Unit,
     onSignInWithYandexClick: () -> Unit,
-    onRegisterClick: (String, String) -> Unit
+    onRegisterClick: (String, String, String) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -234,7 +238,7 @@ fun RegisterScreenContent(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 BigButton(
-                    onClick = { onRegisterClick(email, password) },
+                    onClick = { onRegisterClick(email, password, name) },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = isRegisterButtonEnabled && !isLoading
                 ) {
@@ -265,7 +269,7 @@ private fun RegisterScreenPreview() {
             RegisterScreenContent(
                 AuthState.Unauthorized,
                 null,
-                {}, {}, { _, _ -> }
+                {}, {}, { _, _, _ -> }
             )
         }
     }

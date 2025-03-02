@@ -1,4 +1,4 @@
-package com.prod.bookit.data.remote.dto
+package com.prod.bookit.data.remote.dto.profile
 
 import kotlinx.serialization.Serializable
 

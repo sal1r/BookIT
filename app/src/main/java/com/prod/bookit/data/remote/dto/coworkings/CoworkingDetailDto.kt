@@ -1,4 +1,4 @@
-package com.prod.bookit.data.remote.dto
+package com.prod.bookit.data.remote.dto.coworkings
 
 import com.google.gson.annotations.SerializedName
 

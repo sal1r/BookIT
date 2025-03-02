@@ -1,8 +1,7 @@
 package com.prod.bookit.data.remote.dto.auth
 
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class AuthResponse(
-    val token: String
+    @SerializedName("access_token") val token: String
 )

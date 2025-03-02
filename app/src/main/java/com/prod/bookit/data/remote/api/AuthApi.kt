@@ -17,6 +17,6 @@ interface AuthApi {
     @POST("auth/yandex")
     suspend fun signInWithYandex(@Body token: String): AuthResponse
 
-    @POST("/notifications/device-tokens")
+    @POST("api/notifications/device-tokens")
     suspend fun sendDeviceToken(@Body info: NotificationsRequestDto)
 }

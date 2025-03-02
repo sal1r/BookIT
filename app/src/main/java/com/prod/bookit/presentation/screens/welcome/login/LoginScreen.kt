@@ -78,7 +78,7 @@ fun LoginScreen(
         }
 
         is AuthState.Authorized -> {
-            rootNavController.navigate(RootNavDestinations.Home) {
+            rootNavController.navigate(RootNavDestinations.Booking) {
                 popUpTo(RootNavDestinations.Welcome) { inclusive = true }
             }
         }

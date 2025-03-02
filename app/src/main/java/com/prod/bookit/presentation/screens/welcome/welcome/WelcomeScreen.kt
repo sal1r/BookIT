@@ -45,7 +45,7 @@ fun WelcomeScreen(
     authRepository: AuthRepository = getKoin().get()
 ) {
     if (authRepository.getToken() != null) {
-        rootNavController.navigate(RootNavDestinations.Home) {
+        rootNavController.navigate(RootNavDestinations.Booking) {
             popUpTo(RootNavDestinations.Welcome) { inclusive = true }
         }
     }

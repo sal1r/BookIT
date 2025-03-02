@@ -1,4 +1,4 @@
-package com.prod.bookit.presentation.screens.booking
+package com.prod.bookit.presentation.screens.booking.test
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp

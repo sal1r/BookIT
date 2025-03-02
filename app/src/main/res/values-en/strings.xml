@@ -30,4 +30,11 @@
     <string name="wrong_email_format">Invalid e-mail</string>
     <string name="field_cannot_be_empty">Field must not be empty</string>
     <string name="booking__coworking_title">Coworking %s</string>
+    <string name="booking__place_title">Place №%d</string>
+    <string name="booking__date">When: %s</string>
+    <string name="booking__from">From %s</string>
+    <string name="booking__until">Until %s</string>
+    <string name="booking__from_until">From %1$s until %2$s</string>
+    <string name="booking__book">Book</string>
+    <string name="booking__change">Change</string>
 </resources>

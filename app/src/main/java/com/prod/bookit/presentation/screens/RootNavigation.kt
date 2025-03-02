@@ -6,10 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.prod.bookit.domain.repository.AuthRepository
 import com.prod.bookit.presentation.screens.settings.SettingsScreen
 import com.prod.bookit.presentation.screens.welcome.welcome.WelcomeScreen
 import com.prod.bookit.presentation.screens.booking.BookingScreen
 import com.prod.bookit.presentation.screens.coworkings.CoworkingsScreen
+import org.koin.compose.getKoin
 
 @Composable
 fun RootNavigation() {
@@ -17,8 +19,7 @@ fun RootNavigation() {
 
     NavHost(
         navController = rootNavController,
-//        startDestination = RootNavDestinations.Welcome,
-        startDestination = RootNavDestinations.Welcome,
+        startDestination = getKoin().get<AuthRepository>().getToken()?.let { RootNavDestinations.Welcome } ?: RootNavDestinations.Booking,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },

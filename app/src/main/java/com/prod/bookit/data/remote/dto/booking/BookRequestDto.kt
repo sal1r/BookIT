@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 data class BookRequestDto(
@@ -21,8 +23,8 @@ data class BookRequestDto(
             timeUntil: LocalTime, date: LocalDate
         ) = BookRequestDto(
             spotId = spotId,
-            timeFrom = LocalDateTime.of(date, timeFrom).format(DateTimeFormatter.ISO_DATE_TIME),
-            timeUntil = LocalDateTime.of(date, timeUntil).format(DateTimeFormatter.ISO_DATE_TIME)
+            timeFrom = ZonedDateTime.of(LocalDateTime.of(date, timeFrom), ZoneId.systemDefault()).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+            timeUntil =ZonedDateTime.of(LocalDateTime.of(date, timeUntil), ZoneId.systemDefault()).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
         )
     }
 }

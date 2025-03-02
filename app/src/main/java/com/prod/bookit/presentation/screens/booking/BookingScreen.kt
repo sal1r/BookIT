@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,31 +46,46 @@ import com.prod.bookit.presentation.components.MyDatePicker
 import com.prod.bookit.presentation.components.MyTimePicker
 import com.prod.bookit.presentation.components.OutlinedBigButton
 import com.prod.bookit.presentation.components.ScalableBox
+import com.prod.bookit.presentation.models.BookObject
 import com.prod.bookit.presentation.models.BookingData
+import com.prod.bookit.presentation.models.BookingStatus
 import com.prod.bookit.presentation.models.Coworking
 import com.prod.bookit.presentation.models.CoworkingDefaults
 import com.prod.bookit.presentation.screens.RootNavDestinations
 import com.prod.bookit.presentation.screens.booking.shemes.ShemeType1
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
+import com.prod.bookit.presentation.viewModels.BookingViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun BookingScreen(
-    rootNavController: NavController
+    coworking: Coworking = Coworking(
+        id = "",
+        name = "т-ворк"
+    ),
+    rootNavController: NavController,
+    vm: BookingViewModel = koinViewModel()
 ) {
-    BookingScreenContent(
-        coworking = Coworking(
-            id = "",
-            name = "т-ворк"
-        ),
-        onBackClick = {
-            rootNavController.navigate(RootNavDestinations.Coworkings) {
+    val coroutineScope = rememberCoroutineScope()
+    var bookingStatus by remember { mutableStateOf(BookingStatus.EMPTY) }
 
+    BookingScreenContent(
+        coworking = coworking,
+        onBackClick = {},
+        onBookClick = {
+            coroutineScope.launch {
+                vm.book(it).collectLatest { status ->
+                    bookingStatus = status
+                }
             }
-        }
+        },
+        bookingStatus = bookingStatus
     )
 }
 
@@ -77,9 +93,14 @@ fun BookingScreen(
 @Composable
 private fun BookingScreenContent(
     coworking: Coworking,
+    bookingStatus: BookingStatus,
     isBookingNow: Boolean = false,
     onBackClick: () -> Unit = {},
     onInfoClick: () -> Unit = {},
+    bookObjects: List<BookObject> = List(28) { BookObject(
+        id = it.toString(),
+        index = it + 1
+    ) },
     onBookClick: (BookingData) -> Unit = {}
 ) {
     var startTime by remember { mutableStateOf<LocalTime>(LocalTime.of(16, 0)) }
@@ -99,7 +120,7 @@ private fun BookingScreenContent(
                  navigationIcon = {
                      IconButton(onClick = onBackClick) {
                          Icon(
-                             painter = painterResource(R.drawable.ic_arrow_back_24),
+                             painter = painterResource(R.drawable.ic_list_24),
                              contentDescription = null
                          )
                      }
@@ -115,7 +136,7 @@ private fun BookingScreenContent(
                  actions = {
                      IconButton(onClick = onInfoClick) {
                          Icon(
-                             painter = painterResource(R.drawable.ic_info_outlined_24),
+                             painter = painterResource(R.drawable.ic_account_circle_24),
                              contentDescription = null
                          )
                      }
@@ -142,11 +163,12 @@ private fun BookingScreenContent(
                         initialScale = maxWidth / ((CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 2 + 128.dp  + CoworkingDefaults.wallWidth * 2)
                     ) { scale, offset ->
                         ShemeType1(
+                            bookObjects = bookObjects,
                             onBookObjectClick = {
                                 bookingData = BookingData(
-                                    spotId = bookingData.id,
+                                    spotId = it.id,
                                     coworkingName = coworking.name,
-                                    bookObjectIndex = it,
+                                    bookObjectIndex = it.index,
                                     startTime = startTime,
                                     endTime = endTime,
                                     date = date
@@ -338,7 +360,8 @@ private fun BookingScreenPreview() {
         coworking = Coworking(
             id = "",
             name = "т-ворк"
-        )
+        ),
+        bookingStatus = BookingStatus.EMPTY
     )
 }
 

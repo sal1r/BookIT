@@ -27,13 +27,14 @@ import com.prod.bookit.presentation.screens.booking.objects.HorizontalWall
 import com.prod.bookit.presentation.screens.booking.objects.VerticalWall
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
+import kotlin.math.ceil
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ShemeType1(
     modifier: Modifier = Modifier,
     onBookObjectClick: (index: Int) -> Unit = {},
-    avalibleToBookObjects: List<Int> = List(28) { it + 1 }
+    avalibleToBookObjects: List<Int> = List(14) { it * 2 + 1 }
 ) {
     Column(
         modifier = modifier

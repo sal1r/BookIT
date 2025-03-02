@@ -47,17 +47,17 @@ fun BookingCanvas(
 
 @Composable
 private fun BookingCanvasPreview() {
-    Surface {
-        BookingCanvas(
-            coworking = Coworking(
-                id = 0,
-                name = "т-ворк",
-                width = 128,
-                height = 256,
-            ),
-            bookObjects = emptyList()
-        )
-    }
+//    Surface {
+//        BookingCanvas(
+//            coworking = Coworking(
+//                id = 0,
+//                name = "т-ворк",
+//                width = 128,
+//                height = 256,
+//            ),
+//            bookObjects = emptyList()
+//        )
+//    }
 }
 
 @Preview

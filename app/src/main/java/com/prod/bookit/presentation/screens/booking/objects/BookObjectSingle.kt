@@ -47,7 +47,10 @@ fun BookObjectSingle(
                     if (bookObjectUIData.avalibleToBook) bookObjectColors.avalibleContainerColor
                     else bookObjectColors.unavalibleContainerColor
                 )
-                .clickable(onClick = onClick),
+                .then(
+                    if (bookObjectUIData.avalibleToBook) Modifier.clickable(onClick = onClick)
+                    else Modifier
+                ),
             contentAlignment = Alignment.Center
         ) {
             Text(

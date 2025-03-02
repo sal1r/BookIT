@@ -28,7 +28,7 @@ fun ScalableBox(
     Box(
         modifier = modifier
             .pointerInput(Unit) {
-                detectTransformGestures { centroid, pan, zoom, rotation ->
+                detectTransformGestures { centroid, pan, zoom, _ ->
                     val newScale = scale + scale * (zoom - 1f)
                     val zoomOffset = (centroid - offset) * (1f - zoom)
 

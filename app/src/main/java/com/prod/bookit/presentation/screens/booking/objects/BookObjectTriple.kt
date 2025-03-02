@@ -57,7 +57,9 @@ fun BookObjectTriple(
     ) {
         Box(modifier = modifier) {
             Box(
-                modifier = Modifier.clickable(onClick = onClick)
+                modifier =
+                    if (bookObjectUIData.avalibleToBook) Modifier.clickable(onClick = onClick)
+                    else Modifier
             ) {
                 Box(
                     modifier = Modifier

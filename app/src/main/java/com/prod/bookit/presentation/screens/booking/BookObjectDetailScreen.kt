@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -43,8 +44,9 @@ fun BookObjectDetailScreen(
     ModalBottomSheet(
         sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         onDismissRequest = onDismiss,
-        contentWindowInsets = { WindowInsets.systemBars },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.systemBars)
     ) {
         BookObjectDetailScreenContent(
             isLoading = isLoading,
@@ -136,7 +138,7 @@ private fun BookObjectDetailScreenPreview() {
     ) {
         BookObjectDetailScreenContent(
             BookingData(
-                coworkingId = 1,
+                spotId = "",
                 coworkingName = "т-ворк",
                 bookObjectIndex = 26,
                 startTime = LocalTime.of(16, 30),

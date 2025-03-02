@@ -62,7 +62,7 @@ fun BookingScreen(
 ) {
     BookingScreenContent(
         coworking = Coworking(
-            id = 0,
+            id = "",
             name = "т-ворк"
         ),
         onBackClick = {
@@ -144,7 +144,7 @@ private fun BookingScreenContent(
                         ShemeType1(
                             onBookObjectClick = {
                                 bookingData = BookingData(
-                                    coworkingId = coworking.id,
+                                    spotId = bookingData.id,
                                     coworkingName = coworking.name,
                                     bookObjectIndex = it,
                                     startTime = startTime,
@@ -336,7 +336,7 @@ private fun BookingScreenContent(
 private fun BookingScreenPreview() {
     BookingScreenContent(
         coworking = Coworking(
-            id = 0,
+            id = "",
             name = "т-ворк"
         )
     )

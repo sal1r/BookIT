@@ -3,6 +3,7 @@ package com.prod.bookit.common.di
 import com.prod.bookit.common.ApiConstants
 import com.prod.bookit.data.remote.api.CoworkingsApi
 import com.prod.bookit.data.remote.api.AuthApi
+import com.prod.bookit.data.remote.api.BookingApi
 import com.prod.bookit.data.remote.api.ProfileApi
 import com.prod.bookit.data.remote.api.interceptors.AuthInterceptor
 import okhttp3.OkHttpClient
@@ -38,5 +39,8 @@ val networkModule = module {
     single { get<Retrofit>().create(ProfileApi::class.java) }
 
     single { get<Retrofit>().create(AuthApi::class.java) }
+
     single { get<Retrofit>().create(CoworkingsApi::class.java) }
+
+    single { get<Retrofit>().create(BookingApi::class.java) }
 }

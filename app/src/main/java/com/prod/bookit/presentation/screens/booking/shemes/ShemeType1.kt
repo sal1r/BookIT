@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.prod.bookit.presentation.models.BookObject
 import com.prod.bookit.presentation.models.BookObjectUIData
 import com.prod.bookit.presentation.models.CoworkingDefaults
 import com.prod.bookit.presentation.screens.booking.objects.BookObjectDouble
@@ -33,7 +34,11 @@ import kotlin.math.ceil
 @Composable
 fun ShemeType1(
     modifier: Modifier = Modifier,
-    onBookObjectClick: (index: Int) -> Unit = {},
+    onBookObjectClick: (BookObject) -> Unit = {},
+    bookObjects: List<BookObject> = List(28) { BookObject(
+        id = it.toString(),
+        index = it + 1
+    ) },
     avalibleToBookObjects: List<Int> = List(14) { it * 2 + 1 }
 ) {
     Column(
@@ -60,7 +65,7 @@ fun ShemeType1(
                                 index = i * 3 + 1,
                                 avalibleToBook = (i * 3 + 1) in avalibleToBookObjects
                             ),
-                            onClick = { onBookObjectClick(i * 3 + 1) }
+                            onClick = { onBookObjectClick(bookObjects[i * 3]) }
                         )
 
                         Spacer(modifier = Modifier.width(CoworkingDefaults.spaceSize))
@@ -70,7 +75,7 @@ fun ShemeType1(
                                 index = i * 3 + 2,
                                 avalibleToBook = (i * 3 + 2) in avalibleToBookObjects
                             ),
-                            onClick = { onBookObjectClick(i * 3 + 2) }
+                            onClick = { onBookObjectClick(bookObjects[i * 3 + 1]) }
                         )
 
                         BookObjectDouble(
@@ -78,7 +83,7 @@ fun ShemeType1(
                                 index = i * 3 + 3,
                                 avalibleToBook = (i * 3 + 3) in avalibleToBookObjects
                             ),
-                            onClick = { onBookObjectClick(i * 3 + 3) }
+                            onClick = { onBookObjectClick(bookObjects[i * 3 + 2]) }
                         )
                     }
 
@@ -91,7 +96,7 @@ fun ShemeType1(
                         index = 25,
                         avalibleToBook = 25 in avalibleToBookObjects
                     ),
-                    onClick = { onBookObjectClick(25) }
+                    onClick = { onBookObjectClick(bookObjects[24]) }
                 )
 
                 BookObjectTriple(
@@ -100,7 +105,7 @@ fun ShemeType1(
                         index = 26,
                         avalibleToBook = 26 in avalibleToBookObjects
                     ),
-                    onClick = { onBookObjectClick(26) },
+                    onClick = { onBookObjectClick(bookObjects[25]) },
                     ltr = true
                 )
             }
@@ -129,7 +134,7 @@ fun ShemeType1(
                                 index = i * 3 + 13,
                                 avalibleToBook = (i * 3 + 13) in avalibleToBookObjects
                             ),
-                            onClick = { onBookObjectClick(i * 3 + 13) }
+                            onClick = { onBookObjectClick(bookObjects[i * 3 + 12]) }
                         )
 
                         Spacer(modifier = Modifier.width(CoworkingDefaults.spaceSize))
@@ -139,7 +144,7 @@ fun ShemeType1(
                                 index = i * 3 + 14,
                                 avalibleToBook = (i * 3 + 14) in avalibleToBookObjects
                             ),
-                            onClick = { onBookObjectClick(i * 3 + 14) }
+                            onClick = { onBookObjectClick(bookObjects[i * 3 + 13]) }
                         )
 
                         BookObjectDouble(
@@ -147,7 +152,7 @@ fun ShemeType1(
                                 index = i * 3 + 15,
                                 avalibleToBook = (i * 3 + 15) in avalibleToBookObjects
                             ),
-                            onClick = { onBookObjectClick(i * 3 + 15) }
+                            onClick = { onBookObjectClick(bookObjects[i * 3 + 14]) }
                         )
                     }
 
@@ -160,7 +165,7 @@ fun ShemeType1(
                         index = 27,
                         avalibleToBook = 27 in avalibleToBookObjects
                     ),
-                    onClick = { onBookObjectClick(27) }
+                    onClick = { onBookObjectClick(bookObjects[26]) }
                 )
 
                 BookObjectTriple(
@@ -169,7 +174,7 @@ fun ShemeType1(
                         index = 28,
                         avalibleToBook = 28 in avalibleToBookObjects
                     ),
-                    onClick = { onBookObjectClick(28) },
+                    onClick = { onBookObjectClick(bookObjects[27]) },
                     ltr = false
                 )
             }

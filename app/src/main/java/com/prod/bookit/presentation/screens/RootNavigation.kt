@@ -19,7 +19,7 @@ fun RootNavigation() {
 
     NavHost(
         navController = rootNavController,
-        startDestination = getKoin().get<AuthRepository>().getToken()?.let { RootNavDestinations.Welcome } ?: RootNavDestinations.Booking,
+        startDestination = getKoin().get<AuthRepository>().getToken()?.let { RootNavDestinations.Booking } ?: RootNavDestinations.Welcome,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },

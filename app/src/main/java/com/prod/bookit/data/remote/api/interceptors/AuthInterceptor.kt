@@ -11,6 +11,7 @@ class AuthInterceptor(
         val originalRequest = chain.request()
 
         if (originalRequest.url.encodedPath.startsWith("/users") ||
+            originalRequest.url.encodedPath.startsWith("/storage") ||
             originalRequest.url.encodedPath.startsWith("/auth")) {
 
             val newRequest = originalRequest.newBuilder().apply {

@@ -1,4 +1,4 @@
-package com.prod.bookit.presentation.screens.booking
+package com.prod.bookit.presentation.screens.booking.test
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,17 +47,17 @@ fun BookingCanvas(
 
 @Composable
 private fun BookingCanvasPreview() {
-    Surface {
-        BookingCanvas(
-            coworking = Coworking(
-                id = 0,
-                name = "т-ворк",
-                width = 128,
-                height = 256,
-            ),
-            bookObjects = emptyList()
-        )
-    }
+//    Surface {
+//        BookingCanvas(
+//            coworking = Coworking(
+//                id = 0,
+//                name = "т-ворк",
+//                width = 128,
+//                height = 256,
+//            ),
+//            bookObjects = emptyList()
+//        )
+//    }
 }
 
 @Preview

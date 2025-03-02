@@ -1,5 +1,6 @@
 package com.prod.bookit.data.repository
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
@@ -18,18 +19,30 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 class AuthRepositoryImpl(
     private val api: AuthApi,
     private val prefs: SharedPreferences,
-    private val dispatchers: AppDispatchers
+    private val dispatchers: AppDispatchers,
+    private val context: Context
 ) : AuthRepository {
-    override suspend fun register(email: String, password: String, fullName: String): Boolean {
+    override suspend fun register(email: String, password: String, fullName: String, avatarUri: Uri?): Boolean {
+        val avatarUrl = try {
+            avatarUri?.let { loadImage(it) }
+        } catch (e: Exception) { 
+            Log.e("AuthRepositoryImpl", "Ошибка при загрузке аватара", e)
+            null 
+        }
+
         val response = api.register(
             RegisterRequestDto(
                 email = email,
                 fullName = fullName,
-                password = password
+                password = password,
+                avatarUrl = avatarUrl
             )
         )
 
@@ -101,16 +114,47 @@ class AuthRepositoryImpl(
         prefs.edit().remove("jwt_token").apply()
     }
 
-    override suspend fun loadImage(uri: Uri): String = withContext(dispatchers.io) {
-        val file = uri.toFile()
-        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+    private suspend fun loadImage(uri: Uri): String? = withContext(dispatchers.io) {
+        try {
+            Log.d("AuthRepositoryImpl", "Loading image from URI: $uri")
 
-        api.uploadFile(
+            val tempFile = File.createTempFile("avatar_", ".jpg")
+
+            Log.d("AuthRepositoryImpl", "Created temp file: ${tempFile.absolutePath}")
+
+            val inputStream = context.contentResolver.openInputStream(uri)
+            val outputStream = FileOutputStream(tempFile)
+
+            inputStream?.use { input ->
+                outputStream.use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+            Log.d("AuthRepositoryImpl", "Copied content to temp file, size: ${tempFile.length()}")
+
+            return@withContext uploadFileToServer(tempFile)
+        } catch (e: Exception) {
+            Log.e("AuthRepositoryImpl", "Error loading image", e)
+            return@withContext null
+        }
+    }
+    
+    private suspend fun uploadFileToServer(file: File): String {
+        Log.d("AuthRepositoryImpl", "Uploading file: ${file.absolutePath}, size: ${file.length()}")
+        
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        
+        val response = api.uploadFile(
             file = MultipartBody.Part.createFormData(
                 "file",
                 file.name,
                 requestFile
             )
-        ).url
+        )
+        
+        Log.d("AuthRepositoryImpl", "Upload successful, received URL: ${response.url}")
+        
+        return response.url
     }
 }

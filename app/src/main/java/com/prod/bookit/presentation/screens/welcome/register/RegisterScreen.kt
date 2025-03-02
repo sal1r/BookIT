@@ -1,6 +1,7 @@
 package com.prod.bookit.presentation.screens.welcome.register
 
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -79,7 +80,8 @@ fun RegisterScreen(
         authViewModel.register(
             email = email,
             password = password,
-            fullName = fullName
+            fullName = fullName,
+            avatarUri = avatarUri
         )
     }
 

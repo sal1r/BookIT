@@ -1,5 +1,6 @@
 package com.prod.bookit.presentation.viewModels
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,12 +29,12 @@ class AuthViewModel(
         }
     }
 
-    fun register(email: String, password: String, fullName: String) {
+    fun register(email: String, password: String, fullName: String, avatarUri: Uri?) {
         viewModelScope.launch {
             _authState.value = AuthState.Loading
 
             try {
-                val success = authRepository.register(email, password, fullName)
+                val success = authRepository.register(email, password, fullName, avatarUri)
 
                 _authState.value = if (success) AuthState.Authorized else AuthState.Error("Error")
             } catch (e: Exception) {

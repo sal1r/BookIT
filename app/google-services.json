@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "799353007838",
+    "project_id": "kurva-90efd",
+    "storage_bucket": "kurva-90efd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799353007838:android:c1f6f3cb8c1bfed0595c4f",
+        "android_client_info": {
+          "package_name": "com.prod.bookit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4wRDmjjCFrg_vhp6LD-5Aq9N9E4RTppc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

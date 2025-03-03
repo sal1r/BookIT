@@ -59,6 +59,7 @@ import com.prod.bookit.presentation.screens.booking.shemes.ShemeType1
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
 import com.prod.bookit.presentation.viewModels.BookingViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.compose.getKoin
@@ -147,6 +148,13 @@ private fun BookingScreenContent(
     var startTime by remember { mutableStateOf<LocalTime>(LocalTime.of(16, 0)) }
     var endTime by remember { mutableStateOf<LocalTime>(LocalTime.of(18, 0)) }
     var date by remember { mutableStateOf<LocalDate>(LocalDate.now()) }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            updateSpots(startTime, endTime, date)
+            delay(3000)
+        }
+    }
 
     var showStartTimePicker by remember { mutableStateOf(false) }
     var showEndTimePicker by remember { mutableStateOf(false) }
@@ -298,7 +306,7 @@ private fun BookingScreenContent(
                         .padding(vertical = 16.dp)
                 ) {
                     Row(
-                        modifier = Modifier.padding(horizontal = 24.dp)
+//                        modifier = Modifier.padding(horizontal = 24.dp)
                     ) {
                         OutlinedBigButton(
                             modifier = Modifier.weight(1f),
@@ -310,7 +318,7 @@ private fun BookingScreenContent(
                             ))
                         }
 
-                        Spacer(modifier = Modifier.width(24.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
 
                         OutlinedBigButton(
                             modifier = Modifier.weight(1f),
@@ -323,7 +331,7 @@ private fun BookingScreenContent(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)

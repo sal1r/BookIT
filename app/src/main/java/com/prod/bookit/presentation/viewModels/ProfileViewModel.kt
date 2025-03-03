@@ -19,11 +19,16 @@ class ProfileViewModel(
     private val _bookings = MutableStateFlow<List<ProfileBookingModel>>(emptyList())
     val bookings: StateFlow<List<ProfileBookingModel>> = _bookings
 
+    private val _isLoaded = MutableStateFlow(false)
+    val isLoaded: StateFlow<Boolean> = _isLoaded
+
     fun loadProfile() {
         viewModelScope.launch(Dispatchers.IO) {
+            _isLoaded.value = false
             try {
                 repository.getProfile().let {
                     _profile.value = it
+                    _isLoaded.value = true
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -33,9 +38,11 @@ class ProfileViewModel(
 
     fun deleteBooking(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            _isLoaded.value = false
             try {
                 repository.deleteBooking(id)
                 loadBookings()
+                _isLoaded.value = true
             } catch (e: Exception) {
                 e.printStackTrace()
             }

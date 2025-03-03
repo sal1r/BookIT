@@ -3,6 +3,7 @@ package com.prod.bookit.presentation.screens.profile
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -52,6 +54,7 @@ fun ProfileScreen(
 ) {
     val profile by viewModel.profile.collectAsState()
     val bookings by viewModel.bookings.collectAsState()
+    val isLoaded by viewModel.isLoaded.collectAsState()
 
     var qrBooking by remember { mutableStateOf<ProfileBookingModel?>(null) }
 
@@ -107,8 +110,12 @@ fun ProfileScreen(
                 )
             }
 
-            if (profile != null) {
+            if (profile != null && isLoaded) {
                 ProfileHeader(profile = profile!!)
+            } else {
+                Box {
+                    CircularProgressIndicator()
+                }
             }
 
             Spacer(modifier = Modifier.height(24.dp))

@@ -1,11 +1,13 @@
 package com.prod.bookit.presentation.screens.booking
 
+import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -53,7 +55,7 @@ fun BookObjectDetailScreen(
     ) {
         BookObjectDetailScreenContent(
             bookingData = bookingData,
-            onBookClick = { onBookClick(bookingData) },
+            onBookClick = { onBookClick(if (it == null) bookingData else bookingData.copy(spotId = it)) },
             onChangeClick = onDismiss,
             bookingStatus = bookingStatus
         )
@@ -65,7 +67,7 @@ private fun BookObjectDetailScreenContent(
     bookingStatus: BookingStatus,
     bookingData: BookingData,
     onChangeClick: () -> Unit = {},
-    onBookClick: () -> Unit = {}
+    onBookClick: (altSpotId: String?) -> Unit = {}
 ) {
     Column(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
@@ -103,13 +105,34 @@ private fun BookObjectDetailScreenContent(
         Spacer(modifier = Modifier.weight(1f))
 
         when (bookingStatus) {
-            BookingStatus.ERROR -> Text(
-                text = "Ошибка! Кто-то уже забронировал это место на ваше время :(",
-                color = MaterialTheme.colorScheme.error,
-                textAlign = TextAlign.Center
-            )
+            is BookingStatus.Error-> {
+                if (bookingStatus.bookObjectUIData == null) {
+                    Text(
+                        text = "Ошибка! Кто-то уже забронировал это место на ваше время :(",
+                        color = MaterialTheme.colorScheme.error,
+                        textAlign = TextAlign.Center
+                    )
+                } else {
+                    Column {
+                        Text(
+                            text = "Упс! Кто-то раньше вас забронировал это место. Нашли для вас альтернативное место №${bookingStatus.bookObjectUIData.position}",
+                            color = MaterialTheme.colorScheme.error,
+                            textAlign = TextAlign.Center
+                        )
 
-            BookingStatus.SUCCESS -> Text(
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        BigButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = { onBookClick(bookingStatus.bookObjectUIData.id) }
+                        ) {
+                            Text("Забронировать место №${bookingStatus.bookObjectUIData.position}")
+                        }
+                    }
+                }
+            }
+
+            is BookingStatus.Success -> Text(
                 text = "Вы успешно забронировали место! Забронированные места можно посмотреть во вкладке профиля",
                 textAlign = TextAlign.Center
             )
@@ -133,11 +156,11 @@ private fun BookObjectDetailScreenContent(
 
             BigButton(
                 modifier = Modifier.weight(1f),
-                enabled = bookingStatus == BookingStatus.EMPTY,
-                onClick = onBookClick
+                enabled = bookingStatus is BookingStatus.Empty,
+                onClick = { onBookClick(null) }
             ) {
                 when (bookingStatus) {
-                    BookingStatus.LOADING -> CircularProgressIndicator(
+                    is BookingStatus.Loading -> CircularProgressIndicator(
                         modifier = Modifier.size(24.dp)
                     )
 
@@ -159,7 +182,7 @@ private fun BookObjectDetailScreenPreview() {
             .background(MaterialTheme.colorScheme.surface)
     ) {
         BookObjectDetailScreenContent(
-            bookingStatus = BookingStatus.ERROR,
+            bookingStatus = BookingStatus.Success,
             BookingData(
                 spotId = "",
                 coworkingName = "т-ворк",

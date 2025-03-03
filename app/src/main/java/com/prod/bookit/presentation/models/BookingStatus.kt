@@ -1,5 +1,14 @@
 package com.prod.bookit.presentation.models
 
-enum class BookingStatus {
-    EMPTY, LOADING, SUCCESS, ERROR
+import com.prod.bookit.domain.model.BookObjectUIData
+
+sealed class BookingStatus {
+
+    data object Empty : BookingStatus()
+
+    data object Loading : BookingStatus()
+
+    data object Success : BookingStatus()
+
+    data class Error(val bookObjectUIData: BookObjectUIData?) : BookingStatus()
 }

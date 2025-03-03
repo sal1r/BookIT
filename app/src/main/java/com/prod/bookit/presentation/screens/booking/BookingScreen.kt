@@ -78,7 +78,7 @@ fun BookingScreen(
     vm: BookingViewModel = getKoin().get()
 ) {
     val coroutineScope = rememberCoroutineScope()
-    var bookingStatus by remember { mutableStateOf(BookingStatus.EMPTY) }
+    var bookingStatus by remember { mutableStateOf<BookingStatus>(BookingStatus.Empty) }
     var bookingObjects by remember { mutableStateOf<List<BookObjectUIData>>(
         List(28) { BookObjectUIData(
             id = it.toString(),
@@ -118,7 +118,7 @@ fun BookingScreen(
             }
         },
         bookingStatus = bookingStatus,
-        refreshBookingStatus = { bookingStatus = BookingStatus.EMPTY },
+        refreshBookingStatus = { bookingStatus = BookingStatus.Empty },
         bookObjects = bookingObjects,
         updateSpots = { startTime, endTime, date ->
             coroutineScope.launch {
@@ -181,7 +181,7 @@ private fun BookingScreenContent(
                  title = {
                      Text(
                          text = stringResource(
-                             R.string.booking__coworking_title, "т-ворк"
+                             R.string.booking__coworking_title, coworking.name
                          ),
                          modifier = Modifier.basicMarquee(Int.MAX_VALUE)
                      )
@@ -473,7 +473,7 @@ private fun BookingScreenPreview() {
             id = "",
             name = "т-ворк"
         ),
-        bookingStatus = BookingStatus.EMPTY
+        bookingStatus = BookingStatus.Empty
     )
 }
 

@@ -15,16 +15,16 @@ class BookingViewModel(
 ): ViewModel() {
 
     fun book(bookingData: BookingData): Flow<BookingStatus> = flow {
-        emit(BookingStatus.LOADING)
+        emit(BookingStatus.Loading)
 
-        val isBooked = bookingRepository.book(
+        val result = bookingRepository.book(
             spotId = bookingData.spotId,
             timeFrom = bookingData.startTime,
             timeUntil = bookingData.endTime,
             date = bookingData.date
         )
 
-        emit(if (isBooked) BookingStatus.SUCCESS else BookingStatus.ERROR)
+        emit(result)
     }
 
     suspend fun getSpotsForCoworking(

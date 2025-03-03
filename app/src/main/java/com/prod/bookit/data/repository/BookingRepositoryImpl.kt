@@ -8,8 +8,14 @@ import com.prod.bookit.data.remote.dto.booking.BookRequestDto
 import com.prod.bookit.data.remote.dto.coworkings.SpotDto
 import com.prod.bookit.domain.model.BookObjectUIData
 import com.prod.bookit.domain.repository.BookingRepository
+import com.prod.bookit.presentation.models.BookingStatus
 import com.prod.bookit.presentation.util.serializeDateAndTime
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -24,8 +30,24 @@ class BookingRepositoryImpl(
         timeFrom: LocalTime,
         timeUntil: LocalTime,
         date: LocalDate
-    ): Boolean = withContext(dispatchers.io) {
-        api.book(BookRequestDto.create(spotId, timeFrom, timeUntil, date)).isSuccessful
+    ): BookingStatus = withContext(dispatchers.io) {
+        try {
+            val resp = api.book(BookRequestDto.create(spotId, timeFrom, timeUntil, date))
+
+            if (resp.isSuccessful) return@withContext BookingStatus.Success
+
+            val body = resp.errorBody()?.string() ?: return@withContext BookingStatus.Error(null)
+
+            val spot = Json.parseToJsonElement(body).jsonObject["spot"]?.jsonObject ?: return@withContext BookingStatus.Error(null)
+
+            return@withContext BookingStatus.Error(BookObjectUIData(
+                id = spot["id"]!!.jsonPrimitive.content,
+                position = spot["name"]!!.jsonPrimitive.content.drop(1).toInt(),
+                avalibleToBook = true
+            ))
+        } catch (_: Exception) {
+            BookingStatus.Error(null)
+        }
     }
 
     override suspend fun getSpotsForCoworking(

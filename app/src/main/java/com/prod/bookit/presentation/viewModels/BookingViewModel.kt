@@ -7,6 +7,8 @@ import com.prod.bookit.presentation.models.BookingStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
+import java.time.LocalDate
+import java.time.LocalTime
 
 class BookingViewModel(
     private val bookingRepository: BookingRepository
@@ -24,4 +26,9 @@ class BookingViewModel(
 
         emit(if (isBooked) BookingStatus.SUCCESS else BookingStatus.ERROR)
     }
+
+    suspend fun getSpotsForCoworking(
+        coworkingId: String, timeFrom: LocalTime,
+        timeUntil: LocalTime, date: LocalDate
+    ) = bookingRepository.getSpotsForCoworking(coworkingId, timeFrom, timeUntil, date)
 }

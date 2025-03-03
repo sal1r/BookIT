@@ -6,7 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.prod.bookit.domain.repository.AuthRepository
+import com.prod.bookit.presentation.models.Coworking
 import com.prod.bookit.presentation.screens.settings.SettingsScreen
 import com.prod.bookit.presentation.screens.welcome.welcome.WelcomeScreen
 import com.prod.bookit.presentation.screens.booking.BookingScreen
@@ -20,7 +22,9 @@ fun RootNavigation() {
 
     NavHost(
         navController = rootNavController,
-        startDestination = getKoin().get<AuthRepository>().getToken()?.let { RootNavDestinations.Booking } ?: RootNavDestinations.Welcome,
+        startDestination = getKoin().get<AuthRepository>().getToken()?.let {
+            RootNavDestinations.Booking(coworkingId = Coworking.coworkings[0].id)
+        } ?: RootNavDestinations.Welcome,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
@@ -40,8 +44,11 @@ fun RootNavigation() {
         }
 
         composable<RootNavDestinations.Booking> {
+            val route = it.toRoute<RootNavDestinations.Booking>()
+
             BookingScreen(
-                rootNavController = rootNavController
+                rootNavController = rootNavController,
+                coworking = Coworking.coworkings.first { it.id == route.coworkingId }
             )
         }
 

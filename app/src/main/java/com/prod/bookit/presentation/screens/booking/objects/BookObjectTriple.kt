@@ -6,13 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -25,13 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.prod.bookit.presentation.models.BookObjectColors
 import com.prod.bookit.presentation.models.BookObjectDefaults
-import com.prod.bookit.presentation.models.BookObjectUIData
+import com.prod.bookit.domain.model.BookObjectUIData
 import com.prod.bookit.presentation.models.CoworkingDefaults
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
@@ -77,7 +73,7 @@ fun BookObjectTriple(
                         modifier = Modifier.requiredSize(CoworkingDefaults.cellSize)
                     ) {
                         Text(
-                            text = bookObjectUIData.index.toString(),
+                            text = bookObjectUIData.position.toString(),
                             modifier = Modifier.align(Alignment.Center),
                             style = MaterialTheme.typography.titleLarge
                         )
@@ -147,15 +143,17 @@ private fun BookObjectTriplePreview() {
         ) {
             BookObjectTriple(
                 bookObjectUIData = BookObjectUIData(
-                    index = 1,
-                    avalibleToBook = true
+                    position = 1,
+                    avalibleToBook = true,
+                    id = ""
                 ),
                 ltr = true
             )
             BookObjectTriple(
                 bookObjectUIData = BookObjectUIData(
-                    index = 2,
-                    avalibleToBook = false
+                    position = 2,
+                    avalibleToBook = false,
+                    id = ""
                 ),
                 ltr = false
             )

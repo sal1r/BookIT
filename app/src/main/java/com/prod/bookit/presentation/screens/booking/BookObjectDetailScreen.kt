@@ -77,7 +77,7 @@ private fun BookObjectDetailScreenContent(
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = stringResource(R.string.booking__place_title, bookingData.bookObjectIndex),
+            text = stringResource(R.string.booking__place_title, bookingData.bookObjectPosition),
             style = MaterialTheme.typography.titleLarge
         )
 
@@ -160,7 +160,7 @@ private fun BookObjectDetailScreenPreview() {
             BookingData(
                 spotId = "",
                 coworkingName = "т-ворк",
-                bookObjectIndex = 26,
+                bookObjectPosition = 26,
                 startTime = LocalTime.of(16, 30),
                 endTime = LocalTime.of(18, 0),
                 date = LocalDate.of(2025, 3, 12)

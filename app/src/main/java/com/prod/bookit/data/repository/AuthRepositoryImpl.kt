@@ -116,11 +116,7 @@ class AuthRepositoryImpl(
 
     private suspend fun loadImage(uri: Uri): String? = withContext(dispatchers.io) {
         try {
-            Log.d("AuthRepositoryImpl", "Loading image from URI: $uri")
-
             val tempFile = File.createTempFile("avatar_", ".jpg")
-
-            Log.d("AuthRepositoryImpl", "Created temp file: ${tempFile.absolutePath}")
 
             val inputStream = context.contentResolver.openInputStream(uri)
             val outputStream = FileOutputStream(tempFile)
@@ -131,8 +127,6 @@ class AuthRepositoryImpl(
                 }
             }
 
-            Log.d("AuthRepositoryImpl", "Copied content to temp file, size: ${tempFile.length()}")
-
             return@withContext uploadFileToServer(tempFile)
         } catch (e: Exception) {
             Log.e("AuthRepositoryImpl", "Error loading image", e)
@@ -141,7 +135,6 @@ class AuthRepositoryImpl(
     }
     
     private suspend fun uploadFileToServer(file: File): String {
-        Log.d("AuthRepositoryImpl", "Uploading file: ${file.absolutePath}, size: ${file.length()}")
         
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         
@@ -152,8 +145,6 @@ class AuthRepositoryImpl(
                 requestFile
             )
         )
-        
-        Log.d("AuthRepositoryImpl", "Upload successful, received URL: ${response.url}")
         
         return response.url
     }

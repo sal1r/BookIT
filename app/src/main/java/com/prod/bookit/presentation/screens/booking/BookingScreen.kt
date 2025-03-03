@@ -1,5 +1,6 @@
 package com.prod.bookit.presentation.screens.booking
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
@@ -24,11 +25,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -41,12 +44,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.prod.bookit.R
+import com.prod.bookit.domain.model.BookObjectUIData
 import com.prod.bookit.presentation.components.BigButton
 import com.prod.bookit.presentation.components.MyDatePicker
 import com.prod.bookit.presentation.components.MyTimePicker
 import com.prod.bookit.presentation.components.OutlinedBigButton
 import com.prod.bookit.presentation.components.ScalableBox
-import com.prod.bookit.presentation.models.BookObject
 import com.prod.bookit.presentation.models.BookingData
 import com.prod.bookit.presentation.models.BookingStatus
 import com.prod.bookit.presentation.models.Coworking
@@ -58,7 +61,6 @@ import com.prod.bookit.presentation.theme.LightBlueTheme
 import com.prod.bookit.presentation.viewModels.BookingViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.getKoin
 import java.time.LocalDate
 import java.time.LocalTime
@@ -67,16 +69,38 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun BookingScreen(
     rootNavController: NavController,
+    coworking: Coworking,
     vm: BookingViewModel = getKoin().get()
 ) {
     val coroutineScope = rememberCoroutineScope()
     var bookingStatus by remember { mutableStateOf(BookingStatus.EMPTY) }
+    var bookingObjects by remember { mutableStateOf<List<BookObjectUIData>>(
+        List(28) { BookObjectUIData(
+            id = it.toString(),
+            position = it + 1,
+            avalibleToBook = false
+        ) }
+    ) }
+
+    LaunchedEffect(Unit) {
+        snapshotFlow {
+            bookingObjects
+        }.collectLatest {
+            Log.d("test", it.toString())
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        bookingObjects = vm.getSpotsForCoworking(
+            coworkingId = coworking.id,
+            timeFrom = LocalTime.of(16, 0),
+            timeUntil = LocalTime.of(18, 0),
+            date = LocalDate.now()
+        )
+    }
 
     BookingScreenContent(
-        coworking = Coworking(
-            id = "",
-            name = "т-ворк"
-        ),
+        coworking = coworking,
         onBackClick = {
             rootNavController.navigate(RootNavDestinations.Coworkings) {
 
@@ -95,7 +119,18 @@ fun BookingScreen(
             }
         },
         bookingStatus = bookingStatus,
-        refreshBookingStatus = { bookingStatus = BookingStatus.EMPTY }
+        refreshBookingStatus = { bookingStatus = BookingStatus.EMPTY },
+        bookObjects = bookingObjects,
+        updateSpots = { startTime, endTime, date ->
+            coroutineScope.launch {
+                bookingObjects = vm.getSpotsForCoworking(
+                    coworkingId = coworking.id,
+                    timeFrom = LocalTime.of(16, 0),
+                    timeUntil = LocalTime.of(18, 0),
+                    date = LocalDate.now()
+                )
+            }
+        }
     )
 }
 
@@ -106,12 +141,14 @@ private fun BookingScreenContent(
     bookingStatus: BookingStatus,
     onBackClick: () -> Unit = {},
     onInfoClick: () -> Unit = {},
-    bookObjects: List<BookObject> = List(28) { BookObject(
+    bookObjects: List<BookObjectUIData> = List(28) { BookObjectUIData(
         id = it.toString(),
-        index = it + 1
+        position = it + 1,
+        avalibleToBook = false
     ) },
     onBookClick: (BookingData) -> Unit = {},
-    refreshBookingStatus: () -> Unit = {}
+    refreshBookingStatus: () -> Unit = {},
+    updateSpots: (startTime: LocalTime, endTime: LocalTime, date: LocalDate) -> Unit = { _, _, _ -> }
 ) {
     var startTime by remember { mutableStateOf<LocalTime>(LocalTime.of(16, 0)) }
     var endTime by remember { mutableStateOf<LocalTime>(LocalTime.of(18, 0)) }
@@ -175,10 +212,12 @@ private fun BookingScreenContent(
                         ShemeType1(
                             bookObjects = bookObjects,
                             onBookObjectClick = {
+                                refreshBookingStatus()
+
                                 bookingData = BookingData(
                                     spotId = it.id,
                                     coworkingName = coworking.name,
-                                    bookObjectIndex = it.index,
+                                    bookObjectPosition = it.position,
                                     startTime = startTime,
                                     endTime = endTime,
                                     date = date
@@ -300,14 +339,20 @@ private fun BookingScreenContent(
 
                         BigButton(
                             modifier = Modifier.weight(1f),
-                            onClick = { date = LocalDate.now() }
+                            onClick = {
+                                date = LocalDate.now()
+                                updateSpots(startTime, endTime, date)
+                            }
                         ) {
                             Text("Сегодня")
                         }
 
                         BigButton(
                             modifier = Modifier.weight(1f),
-                            onClick = { date = LocalDate.now().plusDays(1) }
+                            onClick = {
+                                date = LocalDate.now().plusDays(1)
+                                updateSpots(startTime, endTime, date)
+                            }
                         ) {
                             Text("Завтра")
                         }
@@ -330,6 +375,7 @@ private fun BookingScreenContent(
         MyTimePicker(
             onTimeSelected = {
                 startTime = it
+                updateSpots(startTime, endTime, date)
                 showStartTimePicker = false
             },
             onDismiss = {
@@ -342,6 +388,7 @@ private fun BookingScreenContent(
         MyTimePicker(
             onTimeSelected = {
                 endTime = it
+                updateSpots(startTime, endTime, date)
                 showEndTimePicker = false
             },
             onDismiss = {
@@ -354,6 +401,7 @@ private fun BookingScreenContent(
         MyDatePicker(
             onDateSelected = {
                 date = it
+                updateSpots(startTime, endTime, date)
                 showDatePicker = false
             },
             onDismiss = {

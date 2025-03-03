@@ -6,7 +6,7 @@ import java.time.LocalTime
 data class BookingData(
     val spotId: String,
     val coworkingName: String,
-    val bookObjectIndex: Int,
+    val bookObjectPosition: Int,
     val startTime: LocalTime,
     val endTime: LocalTime,
     val date: LocalDate

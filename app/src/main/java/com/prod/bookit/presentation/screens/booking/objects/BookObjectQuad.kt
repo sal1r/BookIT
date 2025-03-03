@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prod.bookit.presentation.models.BookObjectColors
 import com.prod.bookit.presentation.models.BookObjectDefaults
-import com.prod.bookit.presentation.models.BookObjectUIData
+import com.prod.bookit.domain.model.BookObjectUIData
 import com.prod.bookit.presentation.models.CoworkingDefaults
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
@@ -56,7 +54,7 @@ fun BookObjectQuad(
                 modifier = Modifier.size(CoworkingDefaults.cellSize)
             ) {
                 Text(
-                    text = bookObjectUIData.index.toString(),
+                    text = bookObjectUIData.position.toString(),
                     modifier = Modifier.align(Alignment.Center),
                     style = MaterialTheme.typography.titleLarge
                 )
@@ -74,14 +72,16 @@ private fun BookObjectQuadPreview() {
         ) {
             BookObjectQuad(
                 bookObjectUIData = BookObjectUIData(
-                    index = 1,
-                    avalibleToBook = true
+                    position = 1,
+                    avalibleToBook = true,
+                    id = ""
                 )
             )
             BookObjectQuad(
                 bookObjectUIData = BookObjectUIData(
-                    index = 2,
-                    avalibleToBook = false
+                    position = 2,
+                    avalibleToBook = false,
+                    id = ""
                 )
             )
         }

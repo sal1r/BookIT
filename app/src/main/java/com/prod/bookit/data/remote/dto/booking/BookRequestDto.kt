@@ -1,6 +1,7 @@
 package com.prod.bookit.data.remote.dto.booking
 
 import com.google.gson.annotations.SerializedName
+import com.prod.bookit.presentation.util.serializeDateAndTime
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -23,8 +24,8 @@ data class BookRequestDto(
             timeUntil: LocalTime, date: LocalDate
         ) = BookRequestDto(
             spotId = spotId,
-            timeFrom = ZonedDateTime.of(LocalDateTime.of(date, timeFrom), ZoneId.systemDefault()).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
-            timeUntil =ZonedDateTime.of(LocalDateTime.of(date, timeUntil), ZoneId.systemDefault()).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
+            timeFrom = serializeDateAndTime(timeFrom, date),
+            timeUntil = serializeDateAndTime(timeUntil, date)
         )
     }
 }

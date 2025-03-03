@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -18,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prod.bookit.presentation.models.BookObject
-import com.prod.bookit.presentation.models.BookObjectUIData
+import com.prod.bookit.domain.model.BookObjectUIData
 import com.prod.bookit.presentation.models.CoworkingDefaults
 import com.prod.bookit.presentation.screens.booking.objects.BookObjectDouble
 import com.prod.bookit.presentation.screens.booking.objects.BookObjectQuad
@@ -28,18 +26,17 @@ import com.prod.bookit.presentation.screens.booking.objects.HorizontalWall
 import com.prod.bookit.presentation.screens.booking.objects.VerticalWall
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
-import kotlin.math.ceil
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ShemeType1(
     modifier: Modifier = Modifier,
-    onBookObjectClick: (BookObject) -> Unit = {},
-    bookObjects: List<BookObject> = List(28) { BookObject(
+    onBookObjectClick: (BookObjectUIData) -> Unit = {},
+    bookObjects: List<BookObjectUIData> = List(28) { BookObjectUIData(
         id = it.toString(),
-        index = it + 1
-    ) },
-    avalibleToBookObjects: List<Int> = List(14) { it * 2 + 1 }
+        position = it + 1,
+        avalibleToBook = false
+    ) }
 ) {
     Column(
         modifier = modifier
@@ -61,28 +58,19 @@ fun ShemeType1(
                             .width(CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize)
                     ) {
                         BookObjectSingle(
-                            bookObjectUIData = BookObjectUIData(
-                                index = i * 3 + 1,
-                                avalibleToBook = (i * 3 + 1) in avalibleToBookObjects
-                            ),
+                            bookObjectUIData = bookObjects[i * 3],
                             onClick = { onBookObjectClick(bookObjects[i * 3]) }
                         )
 
                         Spacer(modifier = Modifier.width(CoworkingDefaults.spaceSize))
 
                         BookObjectSingle(
-                            bookObjectUIData = BookObjectUIData(
-                                index = i * 3 + 2,
-                                avalibleToBook = (i * 3 + 2) in avalibleToBookObjects
-                            ),
+                            bookObjectUIData = bookObjects[i * 3 + 1],
                             onClick = { onBookObjectClick(bookObjects[i * 3 + 1]) }
                         )
 
                         BookObjectDouble(
-                            bookObjectUIData = BookObjectUIData(
-                                index = i * 3 + 3,
-                                avalibleToBook = (i * 3 + 3) in avalibleToBookObjects
-                            ),
+                            bookObjectUIData = bookObjects[i * 3 + 2],
                             onClick = { onBookObjectClick(bookObjects[i * 3 + 2]) }
                         )
                     }
@@ -92,19 +80,13 @@ fun ShemeType1(
 
                 BookObjectQuad(
                     modifier = Modifier.padding(24.dp).padding(top = 24.dp),
-                    bookObjectUIData = BookObjectUIData(
-                        index = 25,
-                        avalibleToBook = 25 in avalibleToBookObjects
-                    ),
+                    bookObjectUIData = bookObjects[24],
                     onClick = { onBookObjectClick(bookObjects[24]) }
                 )
 
                 BookObjectTriple(
                     modifier = Modifier.padding(24.dp),
-                    bookObjectUIData = BookObjectUIData(
-                        index = 26,
-                        avalibleToBook = 26 in avalibleToBookObjects
-                    ),
+                    bookObjectUIData = bookObjects[25],
                     onClick = { onBookObjectClick(bookObjects[25]) },
                     ltr = true
                 )
@@ -130,28 +112,19 @@ fun ShemeType1(
                             .width(CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize)
                     ) {
                         BookObjectSingle(
-                            bookObjectUIData = BookObjectUIData(
-                                index = i * 3 + 13,
-                                avalibleToBook = (i * 3 + 13) in avalibleToBookObjects
-                            ),
+                            bookObjectUIData = bookObjects[i * 3 + 12],
                             onClick = { onBookObjectClick(bookObjects[i * 3 + 12]) }
                         )
 
                         Spacer(modifier = Modifier.width(CoworkingDefaults.spaceSize))
 
                         BookObjectSingle(
-                            bookObjectUIData = BookObjectUIData(
-                                index = i * 3 + 14,
-                                avalibleToBook = (i * 3 + 14) in avalibleToBookObjects
-                            ),
+                            bookObjectUIData = bookObjects[i * 3 + 13],
                             onClick = { onBookObjectClick(bookObjects[i * 3 + 13]) }
                         )
 
                         BookObjectDouble(
-                            bookObjectUIData = BookObjectUIData(
-                                index = i * 3 + 15,
-                                avalibleToBook = (i * 3 + 15) in avalibleToBookObjects
-                            ),
+                            bookObjectUIData = bookObjects[i * 3 + 14],
                             onClick = { onBookObjectClick(bookObjects[i * 3 + 14]) }
                         )
                     }
@@ -161,19 +134,13 @@ fun ShemeType1(
 
                 BookObjectQuad(
                     modifier = Modifier.padding(24.dp).padding(top = 24.dp),
-                    bookObjectUIData = BookObjectUIData(
-                        index = 27,
-                        avalibleToBook = 27 in avalibleToBookObjects
-                    ),
+                    bookObjectUIData = bookObjects[26],
                     onClick = { onBookObjectClick(bookObjects[26]) }
                 )
 
                 BookObjectTriple(
                     modifier = Modifier.padding(24.dp),
-                    bookObjectUIData = BookObjectUIData(
-                        index = 28,
-                        avalibleToBook = 28 in avalibleToBookObjects
-                    ),
+                    bookObjectUIData = bookObjects[27],
                     onClick = { onBookObjectClick(bookObjects[27]) },
                     ltr = false
                 )

@@ -11,7 +11,7 @@ sealed class RootNavDestinations {
     data object Settings : RootNavDestinations()
 
     @Serializable
-    data object Booking : RootNavDestinations()
+    data class Booking(val coworkingId: String) : RootNavDestinations()
 
     @Serializable
     data object Profile : RootNavDestinations()

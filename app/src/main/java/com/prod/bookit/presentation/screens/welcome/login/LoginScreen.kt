@@ -159,7 +159,7 @@ private fun LoginScreenContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
-                    painter = painterResource(R.drawable.ic_launcher_background),
+                    painter = painterResource(R.drawable.bookit_logo),
                     contentDescription = null,
                     modifier = Modifier
                         .size(128.dp)

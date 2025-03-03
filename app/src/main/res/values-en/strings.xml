@@ -36,5 +36,5 @@
     <string name="booking__until">Until %s</string>
     <string name="booking__from_until">From %1$s until %2$s</string>
     <string name="booking__book">Book</string>
-    <string name="booking__change">Change</string>
+    <string name="booking__change">Close</string>
 </resources>

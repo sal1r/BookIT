@@ -20,17 +20,28 @@ fun BigButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    isChosen: Boolean = true,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     content: @Composable RowScope.() -> Unit
 ) {
-    Button(
-        onClick = onClick,
-        modifier = modifier.height(48.dp),
-        shape = MaterialTheme.shapes.medium,
-        enabled = enabled,
-        content = content,
-        colors = colors
-    )
+    if (isChosen) {
+        Button(
+            onClick = onClick,
+            modifier = modifier.height(48.dp),
+            shape = MaterialTheme.shapes.medium,
+            enabled = enabled,
+            content = content,
+            colors = colors
+        )
+    } else {
+        OutlinedBigButton(
+            onClick = onClick,
+            modifier = modifier.height(48.dp),
+            enabled = enabled,
+            content = content,
+            isChosen = false
+        )
+    }
 }
 
 
@@ -38,7 +49,8 @@ fun BigButton(
 private fun BigButtonPreview() {
     Surface {
         BigButton(
-            onClick = {}
+            onClick = {},
+            isChosen = true
         ) {
             Text("Big button")
         }

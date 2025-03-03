@@ -16,19 +16,27 @@ import java.time.ZoneId
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyDatePicker(onDateSelected: (LocalDate) -> Unit, onDismiss: () -> Unit) {
+    val todayMillis = LocalDate.now()
+        .atStartOfDay(ZoneId.systemDefault())
+        .toInstant()
+        .toEpochMilli()
+
     val datePickerState = rememberDatePickerState()
 
     DatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
-            TextButton(onClick = {
-                datePickerState.selectedDateMillis?.let {
-                    val selectedDate = Instant.ofEpochMilli(it)
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDate()
-                    onDateSelected(selectedDate)
-                }
-            }) {
+            TextButton(
+                onClick = {
+                    datePickerState.selectedDateMillis?.let {
+                        val selectedDate = Instant.ofEpochMilli(it)
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate()
+                        onDateSelected(selectedDate)
+                    }
+                },
+                enabled = datePickerState.selectedDateMillis?.let {it >= todayMillis} ?: false
+            ) {
                 Text("Ок")
             }
         },

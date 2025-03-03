@@ -17,7 +17,9 @@ import androidx.compose.ui.input.pointer.pointerInput
 
 @Composable
 fun ScalableBox(
-    initialScale: Float = 1f,
+    initialScale: Float = 3f,
+    minScale: Float = 0.3f,
+    maxScale: Float = 3.0f,
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.Center,
     content: @Composable BoxScope.(scale: Float, offset: Offset) -> Unit
@@ -29,7 +31,7 @@ fun ScalableBox(
         modifier = modifier
             .pointerInput(Unit) {
                 detectTransformGestures { centroid, pan, zoom, _ ->
-                    val newScale = scale + scale * (zoom - 1f)
+                    val newScale = (scale * zoom).coerceIn(minScale, maxScale)
                     val zoomOffset = (centroid - offset) * (1f - zoom)
 
                     scale = newScale

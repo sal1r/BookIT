@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -162,8 +163,10 @@ private fun BookingScreenContent(
     refreshBookingStatus: () -> Unit = {},
     updateSpots: (startTime: LocalTime, endTime: LocalTime, date: LocalDate) -> Unit = { _, _, _ -> }
 ) {
-    var startTime by remember { mutableStateOf<LocalTime>(LocalTime.of(16, 0)) }
-    var endTime by remember { mutableStateOf<LocalTime>(LocalTime.of(18, 0)) }
+    val initialTime = LocalTime.now().plusMinutes(10)
+
+    var startTime by remember { mutableStateOf<LocalTime>(initialTime) }
+    var endTime by remember { mutableStateOf<LocalTime>(initialTime.plusHours(1)) }
     var date by remember { mutableStateOf<LocalDate>(LocalDate.now()) }
 
     LaunchedEffect(Unit) {
@@ -176,6 +179,8 @@ private fun BookingScreenContent(
     var showStartTimePicker by remember { mutableStateOf(false) }
     var showEndTimePicker by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
+
+    var isChosenBtn by remember { mutableIntStateOf(1) }
 
     var bookingData by remember { mutableStateOf<BookingData?>(null) }
 
@@ -395,7 +400,10 @@ private fun BookingScreenContent(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         OutlinedBigButton(
-                            onClick = { showDatePicker = true }
+                            onClick = {
+                                showDatePicker = true
+                                isChosenBtn = 0
+                            }
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.ic_calendar_24),
@@ -408,11 +416,14 @@ private fun BookingScreenContent(
                         }
 
                         BigButton(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier
+                                .weight(1f),
                             onClick = {
                                 date = LocalDate.now()
                                 updateSpots(startTime, endTime, date)
-                            }
+                                isChosenBtn = 1
+                            },
+                            isChosen = isChosenBtn == 1
                         ) {
                             Text("Сегодня")
                         }
@@ -422,7 +433,9 @@ private fun BookingScreenContent(
                             onClick = {
                                 date = LocalDate.now().plusDays(1)
                                 updateSpots(startTime, endTime, date)
-                            }
+                                isChosenBtn = 2
+                            },
+                            isChosen = isChosenBtn == 2
                         ) {
                             Text("Завтра")
                         }

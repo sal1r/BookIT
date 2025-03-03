@@ -10,9 +10,21 @@ class ProfileRepositoryImpl(
     private val api: ProfileApi
 ): ProfileRepository {
     override suspend fun getProfile(): UserProfile {
-        val profile = api.getProfile()
 
-        return profile.toDomain()
+        try {
+            val profile = api.getProfile()
+            return profile.toDomain()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return UserProfile(
+                "1",
+                 "Неизвестно",
+                 "",
+                false,
+                "Неизвестно"
+            )
+        }
+
     }
 
     override suspend fun getBookings(): List<ProfileBookingModel> {

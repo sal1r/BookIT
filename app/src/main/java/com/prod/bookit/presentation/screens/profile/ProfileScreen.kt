@@ -110,32 +110,36 @@ fun ProfileScreen(
 
             if (profile != null && isLoaded) {
                 ProfileHeader(profile = profile!!)
-            } else {
-                Box {
-                    CircularProgressIndicator()
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    text = "Ваши бронирования",
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                if (bookings.isEmpty()) {
+                    Text("У вас пока нет бронирований.")
+                } else {
+                    bookings.forEach { booking ->
+                        BookingCard(
+                            booking = booking,
+                            onDelete = { viewModel.deleteBooking(booking.id) },
+                            onReschedule = { rescheduleBooking = booking },
+                            onShowQr = { qrBooking = booking }
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
                 }
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Text(
-                text = "Ваши бронирования",
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            if (bookings.isEmpty()) {
-                Text("У вас пока нет бронирований.")
             } else {
-                bookings.forEach { booking ->
-                    BookingCard(
-                        booking = booking,
-                        onDelete = { viewModel.deleteBooking(booking.id) },
-                        onReschedule = { rescheduleBooking = booking },
-                        onShowQr = { qrBooking = booking }
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .align(Alignment.CenterHorizontally),
+                ) {
+                    CircularProgressIndicator()
                 }
             }
         }

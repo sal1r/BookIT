@@ -78,7 +78,7 @@ fun BookingCard(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = booking.opensAt,
+                    text = "${booking.timeFrom} до ${booking.timeUntil}",
                     style = MaterialTheme.typography.bodyMedium
                 )
             }

@@ -87,9 +87,7 @@ fun CoworkingsScreen(
             viewModel.loadCoworkingDetail(summary.id)
         },
         onBackClicked = {
-            rootNavController.navigate(RootNavDestinations.Booking) {
-
-            }
+            rootNavController.navigateUp()
         }
     )
 }

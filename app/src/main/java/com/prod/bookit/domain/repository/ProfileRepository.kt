@@ -8,5 +8,5 @@ interface ProfileRepository {
 
     suspend fun getBookings(): List<ProfileBookingModel>
 
-    suspend fun deleteBooking(id: String)
+    suspend fun deleteBooking(id: String): List<ProfileBookingModel>
 }

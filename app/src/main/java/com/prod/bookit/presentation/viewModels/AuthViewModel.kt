@@ -29,12 +29,12 @@ class AuthViewModel(
         }
     }
 
-    fun register(email: String, password: String, fullName: String, avatarUri: Uri?) {
+    fun register(email: String, password: String, fullName: String, avatarUri: Uri?, isAdmin: Boolean) {
         viewModelScope.launch {
             _authState.value = AuthState.Loading
 
             try {
-                val success = authRepository.register(email, password, fullName, avatarUri)
+                val success = authRepository.register(email, password, fullName, avatarUri, isAdmin)
 
                 _authState.value = if (success) AuthState.Authorized else AuthState.Error("Error")
             } catch (e: Exception) {

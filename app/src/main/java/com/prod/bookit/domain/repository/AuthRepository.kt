@@ -3,7 +3,7 @@ package com.prod.bookit.domain.repository
 import android.net.Uri
 
 interface AuthRepository {
-    suspend fun register(email: String, password: String, fullName: String, avatarUri: Uri?): Boolean
+    suspend fun register(email: String, password: String, fullName: String, avatarUri: Uri?, isAdmin: Boolean): Boolean
     suspend fun login(email: String, password: String): Boolean
     suspend fun signInWithYandex(token: String): Boolean
     suspend fun sendDeviceToken()

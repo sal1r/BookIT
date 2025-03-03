@@ -41,18 +41,7 @@ interface CoworkingsApi {
     @GET("bookings/{booking_id}/available-times")
     suspend fun getAvailableTimes(
         @Path("booking_id") bookingId: String
-    ): AvailableSlotsResponse
-
-    @PUT("bookings/{booking_id}")
-    suspend fun rescheduleBooking(
-        @Path("booking_id") bookingId: String,
-        @Body request: RescheduleBookingRequest
-    ): BookingWithOptionsDto
-
-    @DELETE("bookings/{booking_id}")
-    suspend fun cancelBooking(
-        @Path("booking_id") bookingId: String
-    ): Unit
+    ): AvailableSlotsRespons
 
     @GET("bookings/{booking_id}")
     suspend fun getBookingDetails(

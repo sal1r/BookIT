@@ -6,6 +6,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
@@ -41,7 +43,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -51,7 +52,6 @@ import com.prod.bookit.presentation.state.AuthState
 import com.prod.bookit.presentation.components.BigButton
 import com.prod.bookit.presentation.components.InputField
 import com.prod.bookit.presentation.screens.RootNavDestinations
-import com.prod.bookit.presentation.util.secondaryContentColor
 import com.yandex.authsdk.YandexAuthLoginOptions
 import com.yandex.authsdk.YandexAuthOptions
 import com.yandex.authsdk.YandexAuthSdk
@@ -79,11 +79,12 @@ fun RegisterScreen(
         imagePickerLauncher.launch("image/*")
     }
 
-    val onRegisterClick: (String, String, String) -> Unit = { email, password, fullName ->
+    val onRegisterClick: (String, String, String, Boolean) -> Unit = { email, password, fullName, isAdmin ->
         authViewModel.register(
             email = email,
             password = password,
             fullName = fullName,
+            isAdmin = isAdmin,
             avatarUri = avatarUri
         )
     }
@@ -127,7 +128,7 @@ fun RegisterScreenContent(
     avatarUri: Uri?,
     onImageClick: () -> Unit,
     onSignInWithYandexClick: () -> Unit,
-    onRegisterClick: (String, String, String) -> Unit
+    onRegisterClick: (String, String, String, Boolean) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -139,6 +140,7 @@ fun RegisterScreenContent(
     var nameError by rememberSaveable { mutableStateOf<String?>(null) }
     var emailError by rememberSaveable { mutableStateOf<String?>(null) }
     var passwordError by rememberSaveable { mutableStateOf<String?>(null) }
+    var isUserAdmin by rememberSaveable { mutableStateOf(false) }
 
     val isLoading = authState is AuthState.Loading
 
@@ -239,10 +241,17 @@ fun RegisterScreenContent(
                     }
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(8.dp))
+
+                IsAdminSwitch(
+                    state = isUserAdmin,
+                    onCheckedChange = { isUserAdmin = !isUserAdmin }
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
 
                 BigButton(
-                    onClick = { onRegisterClick(email, password, name) },
+                    onClick = { onRegisterClick(email, password, name, isUserAdmin) },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = isRegisterButtonEnabled && !isLoading
                 ) {
@@ -264,6 +273,28 @@ fun RegisterScreenContent(
     }
 }
 
+@Composable
+fun IsAdminSwitch(
+    state: Boolean,
+    onCheckedChange: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Switch(
+            checked = state,
+            onCheckedChange = { onCheckedChange() }
+        )
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+        Text(
+            text = "Войти как администратор",
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
 
 @Preview
 @Composable
@@ -273,7 +304,7 @@ private fun RegisterScreenPreview() {
             RegisterScreenContent(
                 AuthState.Unauthorized,
                 null,
-                {}, {}, { _, _, _ -> }
+                {}, {}, { _, _, _, _ -> }
             )
         }
     }

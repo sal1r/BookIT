@@ -42,6 +42,10 @@ class ProfileViewModel(
         }
     }
 
+    fun rescheduleBooking() {
+
+    }
+
     fun loadBookings() {
         viewModelScope.launch(Dispatchers.IO) {
             try {

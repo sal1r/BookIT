@@ -29,7 +29,7 @@ class AuthRepositoryImpl(
     private val dispatchers: AppDispatchers,
     private val context: Context
 ) : AuthRepository {
-    override suspend fun register(email: String, password: String, fullName: String, avatarUri: Uri?): Boolean {
+    override suspend fun register(email: String, password: String, fullName: String, avatarUri: Uri?, isAdmin: Boolean): Boolean {
         val avatarUrl = try {
             avatarUri?.let { loadImage(it) }
         } catch (e: Exception) { 
@@ -42,6 +42,7 @@ class AuthRepositoryImpl(
                 email = email,
                 fullName = fullName,
                 password = password,
+                isBusiness = isAdmin,
                 avatarUrl = avatarUrl
             )
         )

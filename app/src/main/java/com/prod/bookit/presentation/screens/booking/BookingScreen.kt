@@ -83,14 +83,6 @@ fun BookingScreen(
     ) }
 
     LaunchedEffect(Unit) {
-        snapshotFlow {
-            bookingObjects
-        }.collectLatest {
-            Log.d("test", it.toString())
-        }
-    }
-
-    LaunchedEffect(Unit) {
         bookingObjects = vm.getSpotsForCoworking(
             coworkingId = coworking.id,
             timeFrom = LocalTime.of(16, 0),
@@ -111,11 +103,13 @@ fun BookingScreen(
 
             }
         },
-        onBookClick = {
+        onBookClick = { it, f ->
             coroutineScope.launch {
                 vm.book(it).collectLatest { status ->
                     bookingStatus = status
                 }
+
+                f()
             }
         },
         bookingStatus = bookingStatus,
@@ -125,9 +119,9 @@ fun BookingScreen(
             coroutineScope.launch {
                 bookingObjects = vm.getSpotsForCoworking(
                     coworkingId = coworking.id,
-                    timeFrom = LocalTime.of(16, 0),
-                    timeUntil = LocalTime.of(18, 0),
-                    date = LocalDate.now()
+                    timeFrom = startTime,
+                    timeUntil = endTime,
+                    date = date
                 )
             }
         }
@@ -146,7 +140,7 @@ private fun BookingScreenContent(
         position = it + 1,
         avalibleToBook = false
     ) },
-    onBookClick: (BookingData) -> Unit = {},
+    onBookClick: (BookingData, () -> Unit) -> Unit = { _, _ -> },
     refreshBookingStatus: () -> Unit = {},
     updateSpots: (startTime: LocalTime, endTime: LocalTime, date: LocalDate) -> Unit = { _, _, _ -> }
 ) {
@@ -205,7 +199,9 @@ private fun BookingScreenContent(
                         .weight(1f)
                 ) {
                     ScalableBox(
-                        modifier = Modifier.fillMaxSize().wrapContentSize(unbounded = true, align = Alignment.TopStart),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .wrapContentSize(unbounded = true, align = Alignment.TopStart),
                         contentAlignment = Alignment.TopStart,
                         initialScale = maxWidth / ((CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 2 + 128.dp  + CoworkingDefaults.wallWidth * 2)
                     ) { scale, offset ->
@@ -239,12 +235,14 @@ private fun BookingScreenContent(
                             .fillMaxWidth()
                             .height(4.dp)
                             .align(Alignment.BottomCenter)
-                            .background(Brush.verticalGradient(
-                                listOf(
-                                    Color.Transparent,
-                                    MaterialTheme.colorScheme.surface
+                            .background(
+                                Brush.verticalGradient(
+                                    listOf(
+                                        Color.Transparent,
+                                        MaterialTheme.colorScheme.surface
+                                    )
                                 )
-                            ))
+                            )
                     )
 
                     Box(
@@ -252,12 +250,14 @@ private fun BookingScreenContent(
                             .fillMaxWidth()
                             .height(4.dp)
                             .align(Alignment.TopCenter)
-                            .background(Brush.verticalGradient(
-                                listOf(
-                                    MaterialTheme.colorScheme.surface,
-                                    Color.Transparent
+                            .background(
+                                Brush.verticalGradient(
+                                    listOf(
+                                        MaterialTheme.colorScheme.surface,
+                                        Color.Transparent
+                                    )
                                 )
-                            ))
+                            )
                     )
 
                     Box(
@@ -265,12 +265,14 @@ private fun BookingScreenContent(
                             .fillMaxHeight()
                             .width(4.dp)
                             .align(Alignment.CenterStart)
-                            .background(Brush.horizontalGradient(
-                                listOf(
-                                    MaterialTheme.colorScheme.surface,
-                                    Color.Transparent
+                            .background(
+                                Brush.horizontalGradient(
+                                    listOf(
+                                        MaterialTheme.colorScheme.surface,
+                                        Color.Transparent
+                                    )
                                 )
-                            ))
+                            )
                     )
 
                     Box(
@@ -278,12 +280,14 @@ private fun BookingScreenContent(
                             .fillMaxHeight()
                             .width(4.dp)
                             .align(Alignment.CenterEnd)
-                            .background(Brush.horizontalGradient(
-                                listOf(
-                                    Color.Transparent,
-                                    MaterialTheme.colorScheme.surface
+                            .background(
+                                Brush.horizontalGradient(
+                                    listOf(
+                                        Color.Transparent,
+                                        MaterialTheme.colorScheme.surface
+                                    )
                                 )
-                            ))
+                            )
                     )
 
                 }
@@ -366,7 +370,9 @@ private fun BookingScreenContent(
         BookObjectDetailScreen(
             onDismiss = { bookingData = null },
             bookingData = it,
-            onBookClick = onBookClick,
+            onBookClick = {
+                onBookClick(it, { updateSpots(startTime, endTime, date) })
+            },
             bookingStatus = bookingStatus
         )
     }

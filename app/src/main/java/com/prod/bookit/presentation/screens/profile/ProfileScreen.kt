@@ -38,6 +38,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
 import com.prod.bookit.R
 import com.prod.bookit.domain.model.ProfileBookingModel
 import com.prod.bookit.presentation.components.QrDialog
@@ -87,11 +89,7 @@ fun ProfileScreen(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = null,
                     modifier = Modifier
-                        .clickable {
-                            rootNavController.navigate(RootNavDestinations.Booking) {
-
-                            }
-                        }
+                        .clickable { rootNavController.navigateUp() }
                 )
 
                 Icon(

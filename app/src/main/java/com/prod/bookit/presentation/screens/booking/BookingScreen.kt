@@ -211,7 +211,7 @@ private fun BookingScreenContent(
                             .fillMaxSize()
                             .wrapContentSize(unbounded = true, align = Alignment.TopStart),
                         contentAlignment = Alignment.TopStart,
-                        initialScale = maxWidth / ((CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 2 + 128.dp  + CoworkingDefaults.wallWidth * 2)
+                        initialScale = maxWidth / ((CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 2 + 128.dp)
                     ) { scale, offset ->
                         ShemeType1(
                             bookObjects = bookObjects,

@@ -51,6 +51,7 @@ import com.prod.bookit.R
 import com.prod.bookit.presentation.state.AuthState
 import com.prod.bookit.presentation.components.BigButton
 import com.prod.bookit.presentation.components.InputField
+import com.prod.bookit.presentation.models.Coworking
 import com.prod.bookit.presentation.screens.RootNavDestinations
 import com.yandex.authsdk.YandexAuthLoginOptions
 import com.yandex.authsdk.YandexAuthOptions
@@ -104,7 +105,7 @@ fun RegisterScreen(
     LaunchedEffect(authState) {
         when (authState) {
             is AuthState.Authorized -> {
-                rootNavController.navigate(RootNavDestinations.Booking) {
+                rootNavController.navigate(RootNavDestinations.Booking(coworkingId = Coworking.coworkings[0].id)) {
                     popUpTo(RootNavDestinations.Welcome) { inclusive = true }
                 }
             }

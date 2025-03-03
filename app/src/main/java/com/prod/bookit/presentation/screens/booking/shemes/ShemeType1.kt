@@ -1,11 +1,13 @@
 package com.prod.bookit.presentation.screens.booking.shemes
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -13,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prod.bookit.presentation.models.BookObject
@@ -39,9 +42,9 @@ fun ShemeType1(
     ) }
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.clip(MaterialTheme.shapes.medium)
     ) {
-        HorizontalWall(modifier = Modifier.width((CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth * 2) * 2 + 128.dp))
+        HorizontalWall(modifier = Modifier.width((CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 2 + 128.dp))
 
         Row {
             VerticalWall(modifier = Modifier.height(
@@ -92,15 +95,15 @@ fun ShemeType1(
                 )
             }
 
-            VerticalWall(modifier = Modifier.height(
-                (CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 4
-            ))
+//            VerticalWall(modifier = Modifier.height(
+//                (CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 4
+//            ))
 
             Spacer(modifier = Modifier.width(128.dp))
 
-            VerticalWall(modifier = Modifier.height(
-                (CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 4
-            ))
+//            VerticalWall(modifier = Modifier.height(
+//                (CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 4
+//            ))
 
             Column {
                 for (i in 0..3) {
@@ -151,7 +154,15 @@ fun ShemeType1(
             ))
         }
 
-        HorizontalWall(modifier = Modifier.width((CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth * 2) * 2 + 128.dp))
+        Row(modifier = Modifier.width((CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 2 + 128.dp)) {
+            HorizontalWall(modifier = Modifier.weight(1f))
+            Box(
+                modifier = Modifier
+                    .height(CoworkingDefaults.wallWidth)
+                    .width(96.dp)
+            )
+            HorizontalWall(modifier = Modifier.weight(1f))
+        }
     }
 }
 

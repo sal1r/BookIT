@@ -20,6 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prod.bookit.presentation.models.BookObject
 import com.prod.bookit.domain.model.BookObjectUIData
+import com.prod.bookit.presentation.models.BookObjectColors
+import com.prod.bookit.presentation.models.BookObjectDefaults
 import com.prod.bookit.presentation.models.CoworkingDefaults
 import com.prod.bookit.presentation.screens.booking.objects.BookObjectDouble
 import com.prod.bookit.presentation.screens.booking.objects.BookObjectQuad
@@ -34,6 +36,7 @@ import com.prod.bookit.presentation.theme.LightBlueTheme
 @Composable
 fun ShemeType1(
     modifier: Modifier = Modifier,
+    isAdmin: Boolean = false,
     onBookObjectClick: (BookObjectUIData) -> Unit = {},
     bookObjects: List<BookObjectUIData> = List(28) { BookObjectUIData(
         id = it.toString(),
@@ -61,19 +64,31 @@ fun ShemeType1(
                             .width(CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize)
                     ) {
                         BookObjectSingle(
-                            bookObjectUIData = bookObjects[i * 3],
+                            bookObjectUIData = bookObjects[i * 3].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
+                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                                avalibleContainerColor = MaterialTheme.colorScheme.secondary,
+                                avalibleContentColor = MaterialTheme.colorScheme.onSecondary
+                            ) else BookObjectDefaults.bookObjectColors,
                             onClick = { onBookObjectClick(bookObjects[i * 3]) }
                         )
 
                         Spacer(modifier = Modifier.width(CoworkingDefaults.spaceSize))
 
                         BookObjectSingle(
-                            bookObjectUIData = bookObjects[i * 3 + 1],
+                            bookObjectUIData = bookObjects[i * 3 + 1].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
+                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                                avalibleContainerColor = MaterialTheme.colorScheme.secondary,
+                                avalibleContentColor = MaterialTheme.colorScheme.onSecondary
+                            ) else BookObjectDefaults.bookObjectColors,
                             onClick = { onBookObjectClick(bookObjects[i * 3 + 1]) }
                         )
 
                         BookObjectDouble(
-                            bookObjectUIData = bookObjects[i * 3 + 2],
+                            bookObjectUIData = bookObjects[i * 3 + 2].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
+                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                                avalibleContainerColor = MaterialTheme.colorScheme.secondary,
+                                avalibleContentColor = MaterialTheme.colorScheme.onSecondary
+                            ) else BookObjectDefaults.bookObjectColors,
                             onClick = { onBookObjectClick(bookObjects[i * 3 + 2]) }
                         )
                     }
@@ -83,13 +98,21 @@ fun ShemeType1(
 
                 BookObjectQuad(
                     modifier = Modifier.padding(24.dp).padding(top = 24.dp),
-                    bookObjectUIData = bookObjects[24],
+                    bookObjectUIData = bookObjects[24].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
+                    bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                        avalibleContainerColor = MaterialTheme.colorScheme.secondary,
+                        avalibleContentColor = MaterialTheme.colorScheme.onSecondary
+                    ) else BookObjectDefaults.bookObjectColors,
                     onClick = { onBookObjectClick(bookObjects[24]) }
                 )
 
                 BookObjectTriple(
                     modifier = Modifier.padding(24.dp),
-                    bookObjectUIData = bookObjects[25],
+                    bookObjectUIData = bookObjects[25].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
+                    bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                        avalibleContainerColor = MaterialTheme.colorScheme.secondary,
+                        avalibleContentColor = MaterialTheme.colorScheme.onSecondary
+                    ) else BookObjectDefaults.bookObjectColors,
                     onClick = { onBookObjectClick(bookObjects[25]) },
                     ltr = true
                 )
@@ -115,19 +138,31 @@ fun ShemeType1(
                             .width(CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize)
                     ) {
                         BookObjectSingle(
-                            bookObjectUIData = bookObjects[i * 3 + 12],
+                            bookObjectUIData = bookObjects[i * 3 + 12].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
+                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                                avalibleContainerColor = MaterialTheme.colorScheme.secondary,
+                                avalibleContentColor = MaterialTheme.colorScheme.onSecondary
+                            ) else BookObjectDefaults.bookObjectColors,
                             onClick = { onBookObjectClick(bookObjects[i * 3 + 12]) }
                         )
 
                         Spacer(modifier = Modifier.width(CoworkingDefaults.spaceSize))
 
                         BookObjectSingle(
-                            bookObjectUIData = bookObjects[i * 3 + 13],
+                            bookObjectUIData = bookObjects[i * 3 + 13].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
+                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                                avalibleContainerColor = MaterialTheme.colorScheme.secondary,
+                                avalibleContentColor = MaterialTheme.colorScheme.onSecondary
+                            ) else BookObjectDefaults.bookObjectColors,
                             onClick = { onBookObjectClick(bookObjects[i * 3 + 13]) }
                         )
 
                         BookObjectDouble(
-                            bookObjectUIData = bookObjects[i * 3 + 14],
+                            bookObjectUIData = bookObjects[i * 3 + 14].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
+                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                                avalibleContainerColor = MaterialTheme.colorScheme.secondary,
+                                avalibleContentColor = MaterialTheme.colorScheme.onSecondary
+                            ) else BookObjectDefaults.bookObjectColors,
                             onClick = { onBookObjectClick(bookObjects[i * 3 + 14]) }
                         )
                     }
@@ -137,13 +172,21 @@ fun ShemeType1(
 
                 BookObjectQuad(
                     modifier = Modifier.padding(24.dp).padding(top = 24.dp),
-                    bookObjectUIData = bookObjects[26],
+                    bookObjectUIData = bookObjects[26].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
+                    bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                        avalibleContainerColor = MaterialTheme.colorScheme.secondary,
+                        avalibleContentColor = MaterialTheme.colorScheme.onSecondary
+                    ) else BookObjectDefaults.bookObjectColors,
                     onClick = { onBookObjectClick(bookObjects[26]) }
                 )
 
                 BookObjectTriple(
                     modifier = Modifier.padding(24.dp),
-                    bookObjectUIData = bookObjects[27],
+                    bookObjectUIData = bookObjects[27].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
+                    bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                        avalibleContainerColor = MaterialTheme.colorScheme.secondary,
+                        avalibleContentColor = MaterialTheme.colorScheme.onSecondary
+                    ) else BookObjectDefaults.bookObjectColors,
                     onClick = { onBookObjectClick(bookObjects[27]) },
                     ltr = false
                 )
@@ -170,7 +213,9 @@ fun ShemeType1(
 @Composable
 private fun ShemeType1Preview() {
     Surface {
-        ShemeType1()
+        ShemeType1(
+            isAdmin = false
+        )
     }
 }
 

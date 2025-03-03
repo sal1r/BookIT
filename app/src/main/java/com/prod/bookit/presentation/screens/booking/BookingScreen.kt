@@ -27,6 +27,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -59,13 +60,17 @@ import com.prod.bookit.presentation.models.Coworking
 import com.prod.bookit.presentation.models.CoworkingDefaults
 import com.prod.bookit.presentation.screens.RootNavDestinations
 import com.prod.bookit.presentation.screens.booking.shemes.ShemeType1
+import com.prod.bookit.presentation.state.AuthState
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
 import com.prod.bookit.presentation.util.secondary
+import com.prod.bookit.presentation.viewModels.AuthViewModel
 import com.prod.bookit.presentation.viewModels.BookingViewModel
+import com.prod.bookit.presentation.viewModels.ProfileViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.getKoin
 import java.time.LocalDate
 import java.time.LocalTime
@@ -75,17 +80,19 @@ import java.time.format.DateTimeFormatter
 fun BookingScreen(
     rootNavController: NavController,
     coworking: Coworking,
-    vm: BookingViewModel = getKoin().get()
+    vm: BookingViewModel = getKoin().get(),
+    profileViewModel: ProfileViewModel = koinViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
     var bookingStatus by remember { mutableStateOf<BookingStatus>(BookingStatus.Empty) }
-    var bookingObjects by remember { mutableStateOf<List<BookObjectUIData>>(
+    var bookingObjects by remember { mutableStateOf(
         List(28) { BookObjectUIData(
             id = it.toString(),
             position = it + 1,
             avalibleToBook = false
         ) }
     ) }
+    val isAdmin = profileViewModel.profile.collectAsState().value?.isBusiness ?: false
 
     LaunchedEffect(Unit) {
         bookingObjects = vm.getSpotsForCoworking(
@@ -97,6 +104,7 @@ fun BookingScreen(
     }
 
     BookingScreenContent(
+        isAdmin = isAdmin,
         coworking = coworking,
         onBackClick = {
             rootNavController.navigate(RootNavDestinations.Coworkings) {
@@ -129,6 +137,9 @@ fun BookingScreen(
                     date = date
                 )
             }
+        },
+        openBookingDetails = {
+            // TODO: открытвать шит с бронями места
         }
     )
 }
@@ -136,6 +147,8 @@ fun BookingScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun BookingScreenContent(
+    openBookingDetails: (BookObjectUIData) -> Unit = {},
+    isAdmin: Boolean = false,
     coworking: Coworking,
     bookingStatus: BookingStatus,
     onBackClick: () -> Unit = {},
@@ -254,18 +267,23 @@ private fun BookingScreenContent(
                         initialScale = maxWidth / ((CoworkingDefaults.cellSize * 2 + CoworkingDefaults.spaceSize + 48.dp + CoworkingDefaults.wallWidth) * 2 + 128.dp)
                     ) { scale, offset ->
                         ShemeType1(
+                            isAdmin = isAdmin,
                             bookObjects = bookObjects,
                             onBookObjectClick = {
                                 refreshBookingStatus()
 
-                                bookingData = BookingData(
-                                    spotId = it.id,
-                                    coworkingName = coworking.name,
-                                    bookObjectPosition = it.position,
-                                    startTime = startTime,
-                                    endTime = endTime,
-                                    date = date
-                                )
+                                if (it.avalibleToBook) {
+                                    bookingData = BookingData(
+                                        spotId = it.id,
+                                        coworkingName = coworking.name,
+                                        bookObjectPosition = it.position,
+                                        startTime = startTime,
+                                        endTime = endTime,
+                                        date = date
+                                    )
+                                } else {
+                                    openBookingDetails(it)
+                                }
                             },
                             modifier = Modifier
                                 .graphicsLayer {

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -34,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
@@ -42,6 +44,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.prod.bookit.R
 import com.prod.bookit.domain.model.BookObjectUIData
@@ -58,6 +61,7 @@ import com.prod.bookit.presentation.screens.RootNavDestinations
 import com.prod.bookit.presentation.screens.booking.shemes.ShemeType1
 import com.prod.bookit.presentation.theme.DarkBlueTheme
 import com.prod.bookit.presentation.theme.LightBlueTheme
+import com.prod.bookit.presentation.util.secondary
 import com.prod.bookit.presentation.viewModels.BookingViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -201,6 +205,42 @@ private fun BookingScreenContent(
                 .padding(horizontal = 16.dp)
         ) {
             Column {
+                Row(
+                    modifier = Modifier
+                        .zIndex(10f)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(bottom = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clip(MaterialTheme.shapes.small)
+                                .background(MaterialTheme.colorScheme.primary)
+                        )
+
+                        Text(" - Свободно")
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(24.dp)
+                                .clip(MaterialTheme.shapes.small)
+                                .background(MaterialTheme.colorScheme.onSurface.secondary)
+                        )
+
+                        Text(" - Занято")
+                    }
+                }
+
                 BoxWithConstraints(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -14,10 +14,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
@@ -26,6 +28,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -70,11 +73,14 @@ private fun BookObjectDetailScreenContent(
     onBookClick: (altSpotId: String?) -> Unit = {}
 ) {
     Column(
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+        modifier = Modifier
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
         Text(
             text = stringResource(R.string.booking__coworking_title, bookingData.coworkingName),
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier
+                .padding(top = 16.dp)
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -86,21 +92,37 @@ private fun BookObjectDetailScreenContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            text = stringResource(R.string.booking__date, bookingData.date.format(
-                DateTimeFormatter.ofPattern("dd MMMM")
-            )),
-        )
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 12.dp)
+            ) {
+                Text(
+                    text = "Информация:",
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(4.dp))
 
-        Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = stringResource(R.string.booking__date, bookingData.date.format(
+                        DateTimeFormatter.ofPattern("dd MMMM")
+                    )),
+                )
 
-        Text(
-            text = stringResource(
-                R.string.booking__from_until,
-                bookingData.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-                bookingData.endTime.format(DateTimeFormatter.ofPattern("HH:mm"))
-            )
-        )
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = stringResource(
+                        R.string.booking__from_until,
+                        bookingData.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+                        bookingData.endTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+                    )
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.weight(1f))
 

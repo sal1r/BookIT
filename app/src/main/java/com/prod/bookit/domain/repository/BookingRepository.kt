@@ -1,5 +1,6 @@
 package com.prod.bookit.domain.repository
 
+import com.prod.bookit.data.remote.dto.coworkings.AvailableSlotsResponse
 import com.prod.bookit.domain.model.BookObjectUIData
 import com.prod.bookit.presentation.models.BookingStatus
 import java.time.LocalDate

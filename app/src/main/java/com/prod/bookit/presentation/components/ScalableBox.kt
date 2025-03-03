@@ -17,7 +17,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 
 @Composable
 fun ScalableBox(
-    initialScale: Float = 3f,
+    initialScale: Float = 1f,
     minScale: Float = 0.3f,
     maxScale: Float = 3.0f,
     modifier: Modifier = Modifier,

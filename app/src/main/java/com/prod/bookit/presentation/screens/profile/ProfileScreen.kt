@@ -1,5 +1,6 @@
 package com.prod.bookit.presentation.screens.profile
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -57,6 +59,7 @@ import com.prod.bookit.presentation.viewModels.AuthViewModel
 import com.prod.bookit.presentation.viewModels.ProfileViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
+import java.time.LocalDate
 
 @Composable
 fun ProfileScreen(
@@ -76,13 +79,32 @@ fun ProfileScreen(
 
     val pagerState = rememberPagerState(pageCount = { 2 })
     val tabTitles = listOf("Активные брони", "История")
+
     val scope = rememberCoroutineScope()
 
-    var currentTab by remember { mutableStateOf(0) }
+    var currentTab by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(Unit) {
         viewModel.loadProfile()
         viewModel.loadBookings()
+    }
+
+    if (rescheduleBooking != null) {
+
+        RescheduleDialog(
+            onDismiss = {
+                rescheduleBooking = null
+            },
+            onConfirm = { timeStart, timeEnd ->
+                scope.launch {
+                    viewModel.rescheduleBooking(
+                        bookingId = rescheduleBooking!!.id,
+                        newTimeFrom = timeStart,
+                        newTimeUntil = timeEnd
+                    )
+                }
+            }
+        )
     }
 
     Scaffold(

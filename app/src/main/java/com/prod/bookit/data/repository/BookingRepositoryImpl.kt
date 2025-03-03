@@ -12,8 +12,6 @@ import com.prod.bookit.presentation.models.BookingStatus
 import com.prod.bookit.presentation.util.serializeDateAndTime
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.encodeToJsonElement
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import java.time.LocalDate

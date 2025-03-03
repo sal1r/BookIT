@@ -2,6 +2,9 @@ package com.prod.bookit.presentation.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.prod.bookit.data.remote.dto.coworkings.AvailableSlotsResponse
+import com.prod.bookit.data.remote.dto.coworkings.TimeSlot
+import com.prod.bookit.data.remote.dto.profile.BookingWithOptionsDto
 import com.prod.bookit.domain.model.ProfileBookingModel
 import com.prod.bookit.domain.model.UserProfile
 import com.prod.bookit.domain.repository.ProfileRepository
@@ -9,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProfileViewModel(
     private val repository: ProfileRepository
@@ -47,10 +51,6 @@ class ProfileViewModel(
         }
     }
 
-    fun rescheduleBooking() {
-
-    }
-
     fun loadBookings() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -59,5 +59,13 @@ class ProfileViewModel(
                 e.printStackTrace()
             }
         }
+    }
+
+    suspend fun rescheduleBooking(
+        bookingId: String,
+        newTimeFrom: String,
+        newTimeUntil: String
+    ): BookingWithOptionsDto {
+        return repository.rescheduleBooking(bookingId, newTimeFrom, newTimeUntil)
     }
 }

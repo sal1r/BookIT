@@ -76,6 +76,7 @@ fun CoworkingsScreen(
             onChooseCoworkingClick = {
                 onChooseCoworkingClick(it)
                 showBottomSheet = false
+                rootNavController.navigate(RootNavDestinations.Booking(it.id))
                 viewModel.clearSelectedDetail()
             }
         )

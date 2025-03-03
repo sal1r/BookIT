@@ -38,11 +38,9 @@ class ProfileViewModel(
 
     fun deleteBooking(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _isLoaded.value = false
             try {
                 repository.deleteBooking(id)
                 loadBookings()
-                _isLoaded.value = true
             } catch (e: Exception) {
                 e.printStackTrace()
             }

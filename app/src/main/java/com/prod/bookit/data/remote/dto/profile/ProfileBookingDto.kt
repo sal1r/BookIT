@@ -7,5 +7,6 @@ data class ProfileBookingDto(
     @SerializedName("user_id") val userId: String,
     @SerializedName("time_from") val timeFrom: String,
     @SerializedName("time_until") val timeUntil: String,
+    @SerializedName("status") val status: String,
     val coworking: CoworkingWithSpotDto
 )

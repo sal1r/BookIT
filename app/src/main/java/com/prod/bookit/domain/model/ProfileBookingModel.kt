@@ -8,6 +8,7 @@ data class ProfileBookingModel(
     val timeUntil: String,
     val title: String,
     val address: String,
+    val status: String,
     val opensAt: String,
     val closesAt: String
 )

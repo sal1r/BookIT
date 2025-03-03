@@ -37,6 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.prod.bookit.domain.model.ProfileBookingModel
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,7 +52,8 @@ fun BookingCard(
 
     Card(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(12.dp)
     ) {
@@ -63,7 +66,7 @@ fun BookingCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = booking.title,
+                    text = "Место ${booking.title}",
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.SemiBold)
                 )
 
@@ -72,66 +75,87 @@ fun BookingCard(
                 Text(
                     text = booking.address,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.primary
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = "${booking.timeFrom} до ${booking.timeUntil}",
+                    text = formatEventDateTime(booking.timeFrom, booking.timeUntil),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .clickable {
-                            onShowQr(booking)
+            if (booking.status == "active") {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clickable {
+                                onShowQr(booking)
+                            }
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Box {
+                        IconButton(onClick = { expanded = true }) {
+                            Icon(
+                                imageVector = Icons.Default.MoreVert,
+                                contentDescription = "More options"
+                            )
                         }
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Box {
-                    IconButton(onClick = { expanded = true }) {
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = "More options"
-                        )
-                    }
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false }
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text("Удалить") },
-                            onClick = {
-                                expanded = false
-                                onDelete()
-                            }
-                        )
-                        DropdownMenuItem(
-                            text = { Text("Перенести") },
-                            onClick = {
-                                expanded = false
-                                onReschedule()
-                            }
-                        )
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text("Удалить") },
+                                onClick = {
+                                    expanded = false
+                                    onDelete()
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Перенести") },
+                                onClick = {
+                                    expanded = false
+                                    onReschedule()
+                                }
+                            )
+                        }
                     }
                 }
+            } else {
+                Text(
+                    text = "Завершено",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Gray
+                )
             }
         }
     }
 }
 
+fun formatEventDateTime(startTime: String, endTime: String): String {
+    val startDateTime = ZonedDateTime.parse(startTime)
+    val endDateTime = ZonedDateTime.parse(endTime)
+
+    val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+    val date = startDateTime.format(dateFormatter)
+
+    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+    val startTimeFormatted = startDateTime.format(timeFormatter)
+    val endTimeFormatted = endDateTime.format(timeFormatter)
+
+    return "$date с $startTimeFormatted до $endTimeFormatted"
+}
 
 @Preview
 @Composable

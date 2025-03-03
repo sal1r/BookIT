@@ -21,6 +21,7 @@ fun ProfileBookingDto.toDomain(): ProfileBookingModel =
         spotId = this.coworking.spot.id,
         timeFrom = this.timeFrom,
         timeUntil = this.timeUntil,
+        status = this.status,
         title = this.coworking.spot.name,
         address = this.coworking.address,
         opensAt = this.coworking.opensAt,

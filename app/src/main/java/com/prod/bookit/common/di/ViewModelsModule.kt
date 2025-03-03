@@ -18,7 +18,7 @@ val viewModelModule = module {
 
     viewModel { CoworkingsViewModel(get()) }
 
-    single { ProfileViewModel(get()) }
+    viewModel { ProfileViewModel(get()) }
 
     singleOf(::BookingViewModel)
 }

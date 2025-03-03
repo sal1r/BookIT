@@ -9,6 +9,6 @@ data class CoworkingDetailDto(
     val address: String,
     val capacity: Int,
     @SerializedName("opens_at") val opensAt: String,
-    @SerializedName("ends_at") val endsAt: String,
+    @SerializedName("closes_at") val endsAt: String,
     val images: List<String>
 )

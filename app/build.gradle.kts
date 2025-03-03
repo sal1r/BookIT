@@ -53,6 +53,7 @@ android {
 
 dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    implementation("com.google.zxing:core:3.5.2")
 
     //fcm
     implementation(platform(libs.firebase.bom))

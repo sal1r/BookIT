@@ -11,6 +11,7 @@ import com.prod.bookit.presentation.screens.settings.SettingsScreen
 import com.prod.bookit.presentation.screens.welcome.welcome.WelcomeScreen
 import com.prod.bookit.presentation.screens.booking.BookingScreen
 import com.prod.bookit.presentation.screens.coworkings.CoworkingsScreen
+import com.prod.bookit.presentation.screens.profile.ProfileScreen
 import org.koin.compose.getKoin
 
 @Composable
@@ -46,6 +47,12 @@ fun RootNavigation() {
 
         composable<RootNavDestinations.Coworkings> {
             CoworkingsScreen(
+                rootNavController = rootNavController
+            )
+        }
+
+        composable<RootNavDestinations.Profile> {
+            ProfileScreen(
                 rootNavController = rootNavController
             )
         }

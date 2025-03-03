@@ -14,5 +14,8 @@ sealed class RootNavDestinations {
     data object Booking : RootNavDestinations()
 
     @Serializable
+    data object Profile : RootNavDestinations()
+
+    @Serializable
     data object Coworkings : RootNavDestinations()
 }

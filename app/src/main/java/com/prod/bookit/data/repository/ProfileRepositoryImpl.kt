@@ -2,7 +2,7 @@ package com.prod.bookit.data.repository
 
 import com.prod.bookit.data.mappers.toDomain
 import com.prod.bookit.data.remote.api.ProfileApi
-import com.prod.bookit.domain.model.BookingModel
+import com.prod.bookit.domain.model.ProfileBookingModel
 import com.prod.bookit.domain.model.UserProfile
 import com.prod.bookit.domain.repository.ProfileRepository
 
@@ -15,7 +15,7 @@ class ProfileRepositoryImpl(
         return profile.toDomain()
     }
 
-    override suspend fun getBookings(): List<BookingModel> {
+    override suspend fun getBookings(): List<ProfileBookingModel> {
         return api.getBookings().map { it.toDomain() }
     }
 

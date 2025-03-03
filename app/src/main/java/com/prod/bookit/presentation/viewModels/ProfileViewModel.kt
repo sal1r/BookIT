@@ -2,7 +2,7 @@ package com.prod.bookit.presentation.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prod.bookit.domain.model.BookingModel
+import com.prod.bookit.domain.model.ProfileBookingModel
 import com.prod.bookit.domain.model.UserProfile
 import com.prod.bookit.domain.repository.ProfileRepository
 import kotlinx.coroutines.Dispatchers
@@ -16,8 +16,8 @@ class ProfileViewModel(
     private val _profile = MutableStateFlow<UserProfile?>(null)
     val profile: StateFlow<UserProfile?> = _profile
 
-    private val _bookings = MutableStateFlow<List<BookingModel>>(emptyList())
-    val bookings: StateFlow<List<BookingModel>> = _bookings
+    private val _bookings = MutableStateFlow<List<ProfileBookingModel>>(emptyList())
+    val bookings: StateFlow<List<ProfileBookingModel>> = _bookings
 
     fun loadProfile() {
         viewModelScope.launch(Dispatchers.IO) {

@@ -7,5 +7,5 @@ data class CoworkingSummaryDto(
     @SerializedName("name") val name: String,
     @SerializedName("address") val address: String,
     @SerializedName("opens_at") val openingTime: String,
-    @SerializedName("ends_at") val closingTime: String
+    @SerializedName("closes_at") val closingTime: String
 )

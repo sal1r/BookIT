@@ -97,7 +97,6 @@ fun RegisterScreen(
         yandexAuthLauncher.launch(loginOptions)
     }
 
-
     LaunchedEffect(authState) {
         when (authState) {
             is AuthState.Authorized -> {

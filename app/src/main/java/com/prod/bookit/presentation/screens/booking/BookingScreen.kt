@@ -77,7 +77,16 @@ fun BookingScreen(
             id = "",
             name = "т-ворк"
         ),
-        onBackClick = {},
+        onBackClick = {
+            rootNavController.navigate(RootNavDestinations.Coworkings) {
+
+            }
+        },
+        onInfoClick = {
+            rootNavController.navigate(RootNavDestinations.Profile) {
+
+            }
+        },
         onBookClick = {
             coroutineScope.launch {
                 vm.book(it).collectLatest { status ->

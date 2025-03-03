@@ -1,11 +1,11 @@
 package com.prod.bookit.data.remote.dto.profile
 
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
 data class UserProfileDto(
-    val id: Int,
-    val avatar: String,
+    val id: String,
     val email: String,
-    val name: String
+    @SerializedName("full_name") val fullName: String,
+    @SerializedName("avatar_url") val avatarUrl: String?,
+    @SerializedName("is_business") val isBusiness: String
 )

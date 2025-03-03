@@ -81,32 +81,8 @@ fun CoworkingsScreen(
         )
     }
 
-    val coworkingss = listOf(
-        CoworkingSummary(
-            id = "0",
-            name = "коворкинг 2",
-            address = "ул. Домашняя д.5",
-            opensAt = "10:00",
-            endsAt = "20:00"
-        ),
-        CoworkingSummary(
-            id = "1",
-            name = "коворкинг 2",
-            address = "ул. Домашняя д.5",
-            opensAt = "10:00",
-            endsAt = "20:00"
-        ),
-        CoworkingSummary(
-            id = "2",
-            name = "коворкинг 2",
-            address = "ул. Домашняя д.5",
-            opensAt = "10:00",
-            endsAt = "20:00"
-        )
-    )
-
     CoworkingsScreenContent(
-        coworkings = coworkingss,
+        coworkings = coworkings,
         onCoworkingClick = { summary ->
             viewModel.loadCoworkingDetail(summary.id)
         },

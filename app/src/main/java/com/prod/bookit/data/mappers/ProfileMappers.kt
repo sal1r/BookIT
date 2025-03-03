@@ -1,27 +1,29 @@
 package com.prod.bookit.data.mappers
 
-import com.prod.bookit.data.remote.dto.profile.BookingDto
+import com.prod.bookit.data.remote.dto.profile.ProfileBookingDto
 import com.prod.bookit.data.remote.dto.profile.UserProfileDto
-import com.prod.bookit.domain.model.BookingModel
+import com.prod.bookit.domain.model.ProfileBookingModel
 import com.prod.bookit.domain.model.UserProfile
 
 fun UserProfileDto.toDomain(): UserProfile =
     UserProfile(
         id = id,
-        avatar = avatar,
+        isBusiness = isBusiness,
+        avatarUrl = avatarUrl,
         email = email,
-        name = name
+        fullName = fullName
     )
 
-fun BookingDto.toDomain(): BookingModel =
-    BookingModel(
-        id = id,
-        userId = userId,
-        spotId = spotId,
-        timeFrom = timeFrom,
-        timeUntil = timeUntil,
-        address = address,
-        opensAt = opensAt,
-        closesAt = closesAt
+fun ProfileBookingDto.toDomain(): ProfileBookingModel =
+    ProfileBookingModel(
+        id = this.id,
+        userId = this.userId,
+        spotId = this.coworking.spot.id,
+        timeFrom = this.timeFrom,
+        timeUntil = this.timeUntil,
+        title = this.coworking.spot.name,
+        address = this.coworking.address,
+        opensAt = this.coworking.opensAt,
+        closesAt = this.coworking.closesAt
     )
 

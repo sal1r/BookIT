@@ -1,8 +1,9 @@
 package com.prod.bookit.domain.model
 
 data class UserProfile(
-    val id: Int,
-    val avatar: String,
+    val id: String,
+    val fullName: String,
+    val avatarUrl: String?,
+    val isBusiness: String,
     val email: String,
-    val name: String
 )

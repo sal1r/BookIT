@@ -1,6 +1,6 @@
 package com.prod.bookit.data.remote.api
 
-import com.prod.bookit.data.remote.dto.profile.BookingDto
+import com.prod.bookit.data.remote.dto.profile.ProfileBookingDto
 import com.prod.bookit.data.remote.dto.profile.UserProfileDto
 import retrofit2.http.GET
 
@@ -10,5 +10,5 @@ interface ProfileApi {
     suspend fun getProfile(): UserProfileDto
 
     @GET("users/me/bookings")
-    suspend fun getBookings(): List<BookingDto>
+    suspend fun getBookings(): List<ProfileBookingDto>
 }

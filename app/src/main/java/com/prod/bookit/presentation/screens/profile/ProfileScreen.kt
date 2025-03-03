@@ -221,16 +221,13 @@ fun ProfileScreen(
         }
 
         rescheduleBooking?.let { booking ->
-            // Uncomment and implement RescheduleDialog if needed
-            /*
-            RescheduleDialog(
-                booking = booking,
-                onDismiss = { rescheduleBooking = null },
-                onConfirm = { newDate ->
-                    rescheduleBooking = null
-                }
-            )
-            */
+//            RescheduleDialog(
+//                booking = booking,
+//                onDismiss = { rescheduleBooking = null },
+//                onConfirm = { newDate ->
+//                    rescheduleBooking = null
+//                }
+//            )
         }
     }
 }

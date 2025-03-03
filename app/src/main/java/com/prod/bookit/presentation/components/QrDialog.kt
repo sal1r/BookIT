@@ -28,7 +28,7 @@ fun QrDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("QR-код для \"${booking.title}\"") },
+        title = { Text("QR-код для места ${booking.title}") },
         text = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally

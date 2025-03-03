@@ -52,7 +52,7 @@ fun CoworkingItem(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "Режим работы: с ${coworking.opensAt} до ${coworking.endsAt}",
+                text = "Режим работы: с ${coworking.opensAt.substring(0..4)} до ${coworking.endsAt.substring(0..4)}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.SemiBold

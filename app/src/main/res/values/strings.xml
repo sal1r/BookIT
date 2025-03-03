@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">FinalDraftForProd</string>
+    <string name="app_name" translatable="false">BookIT</string>
     <string name="main">Главная</string>
     <string name="sign_in">Войти</string>
     <string name="sign_up">Зарегистрироваться</string>

@@ -44,6 +44,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import com.prod.bookit.R
 import com.prod.bookit.domain.model.BookObjectUIData
@@ -206,7 +207,9 @@ private fun BookingScreenContent(
             Column {
                 Row(
                     modifier = Modifier
+                        .zIndex(10f)
                         .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.surface)
                         .padding(bottom = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly

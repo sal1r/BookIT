@@ -65,7 +65,7 @@ fun ShemeType1(
                     ) {
                         BookObjectSingle(
                             bookObjectUIData = bookObjects[i * 3].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
-                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                            bookObjectColors = if (isAdmin && !bookObjects[i * 3].avalibleToBook) BookObjectDefaults.bookObjectColors.copy(
                                 avalibleContainerColor = MaterialTheme.colorScheme.secondary,
                                 avalibleContentColor = MaterialTheme.colorScheme.onSecondary
                             ) else BookObjectDefaults.bookObjectColors,
@@ -76,7 +76,7 @@ fun ShemeType1(
 
                         BookObjectSingle(
                             bookObjectUIData = bookObjects[i * 3 + 1].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
-                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                            bookObjectColors = if (isAdmin && !bookObjects[i * 3 + 1].avalibleToBook) BookObjectDefaults.bookObjectColors.copy(
                                 avalibleContainerColor = MaterialTheme.colorScheme.secondary,
                                 avalibleContentColor = MaterialTheme.colorScheme.onSecondary
                             ) else BookObjectDefaults.bookObjectColors,
@@ -85,7 +85,7 @@ fun ShemeType1(
 
                         BookObjectDouble(
                             bookObjectUIData = bookObjects[i * 3 + 2].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
-                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                            bookObjectColors = if (isAdmin && !bookObjects[i * 3 + 2].avalibleToBook) BookObjectDefaults.bookObjectColors.copy(
                                 avalibleContainerColor = MaterialTheme.colorScheme.secondary,
                                 avalibleContentColor = MaterialTheme.colorScheme.onSecondary
                             ) else BookObjectDefaults.bookObjectColors,
@@ -99,7 +99,7 @@ fun ShemeType1(
                 BookObjectQuad(
                     modifier = Modifier.padding(24.dp).padding(top = 24.dp),
                     bookObjectUIData = bookObjects[24].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
-                    bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                    bookObjectColors = if (isAdmin && !bookObjects[24].avalibleToBook) BookObjectDefaults.bookObjectColors.copy(
                         avalibleContainerColor = MaterialTheme.colorScheme.secondary,
                         avalibleContentColor = MaterialTheme.colorScheme.onSecondary
                     ) else BookObjectDefaults.bookObjectColors,
@@ -109,7 +109,7 @@ fun ShemeType1(
                 BookObjectTriple(
                     modifier = Modifier.padding(24.dp),
                     bookObjectUIData = bookObjects[25].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
-                    bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                    bookObjectColors = if (isAdmin && !bookObjects[25].avalibleToBook) BookObjectDefaults.bookObjectColors.copy(
                         avalibleContainerColor = MaterialTheme.colorScheme.secondary,
                         avalibleContentColor = MaterialTheme.colorScheme.onSecondary
                     ) else BookObjectDefaults.bookObjectColors,
@@ -139,7 +139,7 @@ fun ShemeType1(
                     ) {
                         BookObjectSingle(
                             bookObjectUIData = bookObjects[i * 3 + 12].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
-                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                            bookObjectColors = if (isAdmin && !bookObjects[i * 3 + 12].avalibleToBook) BookObjectDefaults.bookObjectColors.copy(
                                 avalibleContainerColor = MaterialTheme.colorScheme.secondary,
                                 avalibleContentColor = MaterialTheme.colorScheme.onSecondary
                             ) else BookObjectDefaults.bookObjectColors,
@@ -150,7 +150,7 @@ fun ShemeType1(
 
                         BookObjectSingle(
                             bookObjectUIData = bookObjects[i * 3 + 13].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
-                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                            bookObjectColors = if (isAdmin && !bookObjects[i * 3 + 13].avalibleToBook) BookObjectDefaults.bookObjectColors.copy(
                                 avalibleContainerColor = MaterialTheme.colorScheme.secondary,
                                 avalibleContentColor = MaterialTheme.colorScheme.onSecondary
                             ) else BookObjectDefaults.bookObjectColors,
@@ -159,7 +159,7 @@ fun ShemeType1(
 
                         BookObjectDouble(
                             bookObjectUIData = bookObjects[i * 3 + 14].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
-                            bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                            bookObjectColors = if (isAdmin && !bookObjects[i * 3 + 14].avalibleToBook) BookObjectDefaults.bookObjectColors.copy(
                                 avalibleContainerColor = MaterialTheme.colorScheme.secondary,
                                 avalibleContentColor = MaterialTheme.colorScheme.onSecondary
                             ) else BookObjectDefaults.bookObjectColors,
@@ -173,7 +173,7 @@ fun ShemeType1(
                 BookObjectQuad(
                     modifier = Modifier.padding(24.dp).padding(top = 24.dp),
                     bookObjectUIData = bookObjects[26].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
-                    bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                    bookObjectColors = if (isAdmin && !bookObjects[26].avalibleToBook) BookObjectDefaults.bookObjectColors.copy(
                         avalibleContainerColor = MaterialTheme.colorScheme.secondary,
                         avalibleContentColor = MaterialTheme.colorScheme.onSecondary
                     ) else BookObjectDefaults.bookObjectColors,
@@ -183,7 +183,7 @@ fun ShemeType1(
                 BookObjectTriple(
                     modifier = Modifier.padding(24.dp),
                     bookObjectUIData = bookObjects[27].let { if (isAdmin) it.copy(avalibleToBook = true) else it },
-                    bookObjectColors = if (isAdmin) BookObjectDefaults.bookObjectColors.copy(
+                    bookObjectColors = if (isAdmin && !bookObjects[27].avalibleToBook) BookObjectDefaults.bookObjectColors.copy(
                         avalibleContainerColor = MaterialTheme.colorScheme.secondary,
                         avalibleContentColor = MaterialTheme.colorScheme.onSecondary
                     ) else BookObjectDefaults.bookObjectColors,

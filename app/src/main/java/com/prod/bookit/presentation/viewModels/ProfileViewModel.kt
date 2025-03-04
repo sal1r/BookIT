@@ -1,5 +1,6 @@
 package com.prod.bookit.presentation.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prod.bookit.data.remote.dto.coworkings.AvailableSlotsResponse
@@ -25,6 +26,10 @@ class ProfileViewModel(
 
     private val _isLoaded = MutableStateFlow(false)
     val isLoaded: StateFlow<Boolean> = _isLoaded
+
+    init {
+        loadProfile()
+    }
 
     fun loadProfile() {
         viewModelScope.launch(Dispatchers.IO) {

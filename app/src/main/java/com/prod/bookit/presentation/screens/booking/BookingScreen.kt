@@ -95,6 +95,10 @@ fun BookingScreen(
     ) }
     val isAdmin = profileViewModel.profile.collectAsState().value?.isBusiness ?: false
 
+    var spotId by remember { mutableStateOf<String?>(null) }
+
+    var allBookingsBottomSheetOpened by remember { mutableStateOf(false) }
+
     LaunchedEffect(Unit) {
         bookingObjects = vm.getSpotsForCoworking(
             coworkingId = coworking.id,
@@ -140,9 +144,35 @@ fun BookingScreen(
             }
         },
         openBookingDetails = {
-            // TODO: открытвать шит с бронями места
+            spotId = it.id
+        },
+        onBookingsListClick = {
+            allBookingsBottomSheetOpened = true
+        },
+        onScanQrClicked = {
+            // TODO: navigate to scan qr screen
         }
     )
+
+    spotId?.let {
+        BookingDetails(
+            spotId = it,
+            vm = vm,
+            onDismiss = { spotId = null }
+        )
+    }
+
+    if (allBookingsBottomSheetOpened) {
+        AllBookingsBottomSheet(
+            vm = vm,
+            onDismiss = { allBookingsBottomSheetOpened = false },
+            onCancelBooking = { booking ->
+                // Здесь можно будет добавить логику отмены бронирования
+                // vm.cancelBooking(booking)
+                allBookingsBottomSheetOpened = false
+            }
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -152,6 +182,8 @@ private fun BookingScreenContent(
     isAdmin: Boolean = false,
     coworking: Coworking,
     bookingStatus: BookingStatus,
+    onBookingsListClick: () -> Unit = {},
+    onScanQrClicked: () -> Unit = {},
     onBackClick: () -> Unit = {},
     onInfoClick: () -> Unit = {},
     bookObjects: List<BookObjectUIData> = List(28) { BookObjectUIData(
@@ -242,7 +274,7 @@ private fun BookingScreenContent(
                                 .background(MaterialTheme.colorScheme.primary)
                         )
 
-                        Text(" - Свободно")
+                        Text("  Свободно")
                     }
 
                     Row(
@@ -252,10 +284,13 @@ private fun BookingScreenContent(
                             modifier = Modifier
                                 .size(24.dp)
                                 .clip(MaterialTheme.shapes.small)
-                                .background(MaterialTheme.colorScheme.onSurface.secondary)
+                                .background(
+                                    if (isAdmin) MaterialTheme.colorScheme.secondary
+                                    else MaterialTheme.colorScheme.onSurface.secondary
+                                )
                         )
 
-                        Text(" - Занято")
+                        Text("  Занято")
                     }
                 }
 
@@ -368,9 +403,7 @@ private fun BookingScreenContent(
                         .background(MaterialTheme.colorScheme.surface)
                         .padding(vertical = 16.dp)
                 ) {
-                    Row(
-//                        modifier = Modifier.padding(horizontal = 24.dp)
-                    ) {
+                    Row {
                         OutlinedBigButton(
                             modifier = Modifier.weight(1f),
                             onClick = { showStartTimePicker = true }
@@ -396,7 +429,27 @@ private fun BookingScreenContent(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    Row(
+                    if (isAdmin) Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        BigButton(
+                            modifier = Modifier
+                                .weight(1f),
+                            onClick = onBookingsListClick,
+                            isChosen = isChosenBtn == 1
+                        ) {
+                            Text("Список броней")
+                        }
+
+                        BigButton(
+                            modifier = Modifier.weight(1f),
+                            onClick = onScanQrClicked
+                        ) {
+                            Text("Сканировать QR")
+                        }
+                    }
+
+                    if (!isAdmin) Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         OutlinedBigButton(
@@ -500,6 +553,7 @@ private fun BookingScreenContent(
 @Composable
 private fun BookingScreenPreview() {
     BookingScreenContent(
+        isAdmin = true,
         coworking = Coworking(
             id = "",
             name = "т-ворк"

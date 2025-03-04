@@ -1,6 +1,7 @@
 package com.prod.bookit.data.remote.api
 
 import com.prod.bookit.data.remote.dto.booking.BookRequestDto
+import com.prod.bookit.data.remote.dto.booking.FullBookingDto
 import com.prod.bookit.data.remote.dto.coworkings.AvailableSlotsResponse
 import com.prod.bookit.data.remote.dto.coworkings.CoworkingDetailDto
 import com.prod.bookit.data.remote.dto.coworkings.CoworkingSummaryDto
@@ -30,48 +31,48 @@ interface CoworkingsApi {
         @Query("time_until") timeUntil: String
     ): List<SpotDto>
 
-    /*@POST("bookings")
-    suspend fun createBooking(
-        @Body request: BookRequestDto
-    ): BookingWithOptionsDto
-
-    @GET("users/me/bookings")
-    suspend fun getMyBookings(): List<UserBookingDto>
-
-    @GET("bookings/{booking_id}/available-times")
-    suspend fun getAvailableTimes(
-        @Path("booking_id") bookingId: String
-    ): AvailableSlotsRespons
-
-    @GET("bookings/{booking_id}")
-    suspend fun getBookingDetails(
-        @Path("booking_id") bookingId: String
-    ): BookingWithOptionsDto
-
+//    @POST("bookings")
+//    suspend fun createBooking(
+//        @Body request: BookRequestDto
+//    ): BookingWithOptionsDto
+//
+//    @GET("users/me/bookings")
+//    suspend fun getMyBookings(): List<UserBookingDto>
+//
+//    @GET("bookings/{booking_id}/available-times")
+//    suspend fun getAvailableTimes(
+//        @Path("booking_id") bookingId: String
+//    ): AvailableSlotsRespons
+//
+//    @GET("bookings/{booking_id}")
+//    suspend fun getBookingDetails(
+//        @Path("booking_id") bookingId: String
+//    ): BookingWithOptionsDto
+//
     @GET("spots/{spot_id}/current-booking")
     suspend fun getCurrentBookingForSpot(
         @Path("spot_id") spotId: String
     ): FullBookingDto
-
+//
     @GET("bookings")
     suspend fun getAllBookings(
         @Query("count") count: Int,
         @Query("page") page: Int
     ): List<FullBookingDto>
-
-    @POST("options")
-    suspend fun createOption(
-        @Body request: CreateOptionRequest
-    ): OptionDto
-
-    @DELETE("options/{option_id}")
-    suspend fun deleteOption(
-        @Path("option_id") optionId: String
-    ): Unit
-
-    @POST("bookings/{booking_id}/options")
-    suspend fun addOptionToBooking(
-        @Path("booking_id") bookingId: String,
-        @Body request: AddOptionRequest
-    ): BookingWithOptionsDto*/
+//
+//    @POST("options")
+//    suspend fun createOption(
+//        @Body request: CreateOptionRequest
+//    ): OptionDto
+//
+//    @DELETE("options/{option_id}")
+//    suspend fun deleteOption(
+//        @Path("option_id") optionId: String
+//    ): Unit
+//
+//    @POST("bookings/{booking_id}/options")
+//    suspend fun addOptionToBooking(
+//        @Path("booking_id") bookingId: String,
+//        @Body request: AddOptionRequest
+//    ): BookingWithOptionsDto
 }

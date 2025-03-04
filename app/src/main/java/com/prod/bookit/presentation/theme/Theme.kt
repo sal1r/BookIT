@@ -17,10 +17,10 @@ val LightBlueTheme = ColorScheme(
     onPrimaryContainer = Color(0xFF003366),
     inversePrimary = Color(0xFFE3F2FD),
 
-    secondary = Color(0xFF5D4037),
-    onSecondary = Color.White,
-    secondaryContainer = Color(0xFFD7CCC8),
-    onSecondaryContainer = Color(0xFF2E1A10),
+    secondary = Color(0xFFFFD740),
+    onSecondary = Color.Black,
+    secondaryContainer = Color(0xFFFFF9C4),
+    onSecondaryContainer = Color(0xFF212121),
     inverseSurface = Color(0xFF303030),
 
     tertiary = Color(0xFF455A64),
@@ -63,10 +63,10 @@ val DarkBlueTheme = ColorScheme(
     onPrimaryContainer = Color(0xFFE3F2FD),
     inversePrimary = Color(0xFF0D47A1),
 
-    secondary = Color(0xFFA1887F),
+    secondary = Color(0xFFFFE57F),
     onSecondary = Color.Black,
-    secondaryContainer = Color(0xFF5D4037),
-    onSecondaryContainer = Color(0xFFD7CCC8),
+    secondaryContainer = Color(0xFF423B00),
+    onSecondaryContainer = Color(0xFFFFF9C4),
     inverseSurface = Color(0xFFE0E0E0),
 
     tertiary = Color(0xFF78909C),

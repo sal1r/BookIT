@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.prod.bookit.domain.repository.BookingRepository
 import com.prod.bookit.presentation.models.BookingData
 import com.prod.bookit.presentation.models.BookingStatus
+import com.prod.bookit.presentation.models.FullBookingInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
@@ -31,4 +32,10 @@ class BookingViewModel(
         coworkingId: String, timeFrom: LocalTime,
         timeUntil: LocalTime, date: LocalDate
     ) = bookingRepository.getSpotsForCoworking(coworkingId, timeFrom, timeUntil, date)
+
+    suspend fun getCurrentBookingForSpot(spotId: String) =
+        bookingRepository.getCurrentBookingForSpot(spotId)
+
+    suspend fun getAllCoworkings(page: Int, count: Int): List<FullBookingInfo> =
+        bookingRepository.getAllBokings(page = page, count = count)
 }

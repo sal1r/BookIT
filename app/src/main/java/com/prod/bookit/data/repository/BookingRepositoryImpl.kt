@@ -5,10 +5,12 @@ import com.prod.bookit.data.mappers.toDomain
 import com.prod.bookit.data.remote.api.BookingApi
 import com.prod.bookit.data.remote.api.CoworkingsApi
 import com.prod.bookit.data.remote.dto.booking.BookRequestDto
+import com.prod.bookit.data.remote.dto.booking.FullBookingDto
 import com.prod.bookit.data.remote.dto.coworkings.SpotDto
 import com.prod.bookit.domain.model.BookObjectUIData
 import com.prod.bookit.domain.repository.BookingRepository
 import com.prod.bookit.presentation.models.BookingStatus
+import com.prod.bookit.presentation.models.FullBookingInfo
 import com.prod.bookit.presentation.util.serializeDateAndTime
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -59,5 +61,13 @@ class BookingRepositoryImpl(
             timeFrom = serializeDateAndTime(timeFrom, date),
             timeUntil = serializeDateAndTime(timeUntil, date)
         ).map(SpotDto::toDomain)
+    }
+
+    override suspend fun getCurrentBookingForSpot(spotId: String): FullBookingInfo = withContext(dispatchers.io) {
+        coworkingsApi.getCurrentBookingForSpot(spotId).toDomain()
+    }
+
+    override suspend fun getAllBokings(page: Int, count: Int): List<FullBookingInfo> = withContext(dispatchers.io) {
+        coworkingsApi.getAllBookings(count = count, page = page).map(FullBookingDto::toDomain)
     }
 }
